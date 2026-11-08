@@ -23,12 +23,16 @@ files, and on uninstall stop it and remove its start-with-Windows entry
    `plugins.updater.pubkey`). If the private key or its password is lost, installed copies can
    never accept another update. Never commit either file.
 2. **Add two repository secrets** (GitHub > Settings > Secrets and variables > Actions), or with the
-   GitHub CLI:
+   GitHub CLI **from Command Prompt** (`cmd`):
 
-   ```bash
+   ```bat
    gh secret set TAURI_SIGNING_PRIVATE_KEY < "%USERPROFILE%\.tauri\framewise-updater.key"
    gh secret set TAURI_SIGNING_PRIVATE_KEY_PASSWORD < "%USERPROFILE%\.tauri\framewise-updater.key.password"
    ```
+
+   Don't pipe the files in from Windows PowerShell 5 (`Get-Content ... | gh secret set`): it adds
+   an invisible byte-order mark, and the release build then fails with "failed to decode base64
+   secret key: Invalid symbol 239".
 
 3. **Updates need a public repository.** The app downloads
    `https://github.com/danieladekunle123/FrameWise/releases/latest/download/latest.json`.
