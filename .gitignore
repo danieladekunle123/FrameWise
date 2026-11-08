@@ -15,3 +15,7 @@ target/
 
 # Test results from this PC (they name software installed on it); scripts regenerate them
 scripts/*-results*.txt
+
+# Playwright output
+test-results/
+playwright-report/

@@ -311,6 +311,8 @@ pub enum HelperRequest {
     /// works without a prompt after they next sign in. The user comes from the parent process's
     /// token, never from the request.
     AllowMonitoringWithoutPrompt,
+    /// Empty Windows' standby list once (the advanced, benchmark-gated option on the Myths page).
+    PurgeStandbyList,
     /// End of task; the helper exits.
     Done,
 }

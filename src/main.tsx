@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Overlay } from "./Overlay";
+import { ErrorBoundary } from "./components/Crash";
 import { resolve, type ThemePref } from "./theme";
 import "./styles.css";
 
@@ -16,6 +17,6 @@ document.documentElement.dataset.theme = resolve(pref);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    {window.location.hash === "#overlay" ? <Overlay /> : <App />}
+    <ErrorBoundary>{window.location.hash === "#overlay" ? <Overlay /> : <App />}</ErrorBoundary>
   </React.StrictMode>,
 );

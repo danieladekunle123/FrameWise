@@ -14,6 +14,7 @@
 //! removes junk files.
 
 pub mod cleanup;
+pub mod crash;
 pub mod evaluate;
 pub mod fixes;
 pub mod frames;

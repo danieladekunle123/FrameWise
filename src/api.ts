@@ -2,6 +2,10 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import type {
   AppInfo,
+  PurgeResult,
+  StandbyStatus,
+  CrashReport,
+  IssueDraft,
   Game,
   GamesList,
   Profile,
@@ -55,6 +59,14 @@ export const api = {
   myths: () => call<Myth[]>("myths"),
   appInfo: () => call<AppInfo>("app_info"),
   prepareUpdate: () => call<void>("prepare_update"),
+  crashReports: () => call<CrashReport[]>("crash_reports"),
+  standbyStatus: () => call<StandbyStatus>("standby_status"),
+  standbyPurge: () => call<PurgeResult>("standby_purge"),
+  crashDismiss: (id: string) => call<void>("crash_dismiss", { id }),
+  crashRecord: (message: string) => call<void>("crash_record", { message }),
+  crashIssue: (id: string) => call<IssueDraft>("crash_issue", { id }),
+  watcherBudgetIssue: (ramMb: number, peakRamMb: number, cpuPct: number, profiles: number, active: boolean) =>
+    call<IssueDraft>("watcher_budget_issue", { ramMb, peakRamMb, cpuPct, profiles, active }),
   systemAccent: () => call<string | null>("system_accent"),
   openExternal: (uri: string) => call<void>("open_external", { uri }),
   // Phase 2

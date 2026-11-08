@@ -5,13 +5,65 @@ import {
   FlaskConical,
   LifeBuoy,
   LockKeyhole,
+  Shield,
   ShieldCheck,
 } from "lucide-react";
-import { api } from "../api";
+import { api, errorText, formatBytes } from "../api";
+import { useFixes } from "../fixes";
 import { Badge, Switch } from "../components/ui";
-import type { AppInfo, Myth } from "../types";
+import type { AppInfo, Myth, StandbyStatus } from "../types";
 import type { ThemePref } from "../theme";
 import { UpdatesSettings } from "../updates";
+
+// ------------------------------------------------------------------ standby list (advanced)
+
+function StandbyPanel() {
+  const fixes = useFixes();
+  const [st, setSt] = useState<StandbyStatus | null>(null);
+  const [result, setResult] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    api.standbyStatus().then(setSt).catch(() => {});
+  }, []);
+  const purge = async () => {
+    setError(null);
+    setResult(null);
+    try {
+      const r = await fixes.runTask(() => api.standbyPurge());
+      if (!r) return;
+      setResult(
+        r.before != null && r.after != null
+          ? `Cleared: the standby list went from ${formatBytes(r.before)} to ${formatBytes(r.after)}. Windows refills it as you use files; benchmark your game now and compare.`
+          : "Cleared. Benchmark your game now and compare with a run from before.",
+      );
+      api.standbyStatus().then(setSt).catch(() => {});
+    } catch (e) {
+      setError(errorText(e));
+    }
+  };
+  return (
+    <div className="standby-panel">
+      <p className="hint">
+        <strong>On this PC:</strong> {st ? formatBytes(st.ram_total_bytes) : "…"} of RAM
+        {st?.standby_bytes != null ? `, ${formatBytes(st.standby_bytes)} on the standby list right now` : ""}.{" "}
+        {st && (st.may_help ? "That's in the range where clearing has sometimes helped." : "With more than 16 GB, clearing isn't expected to help here.")}
+      </p>
+      <ol className="hint standby-steps">
+        <li>Record two benchmarks of a game (Monitor &amp; benchmark).</li>
+        <li>Clear the standby list, then record two more.</li>
+        <li>Keep doing it only if the comparison says "Improvement". Windows refills the list over time, so it's a one-off, not a fix.</li>
+      </ol>
+      <div className="standby-actions">
+        <button className="btn btn-sm" onClick={purge} disabled={fixes.busy}>
+          <Shield size={14} /> Clear the standby list now
+        </button>
+        <span className="hint">Asks Windows for permission once. Nothing else changes.</span>
+      </div>
+      {result && <p className="hint good-text">{result}</p>}
+      {error && <p className="error-text">{error}</p>}
+    </div>
+  );
+}
 
 // ------------------------------------------------------------------ myths
 
@@ -49,6 +101,7 @@ export function Myths() {
             </div>
           )}
           <p>{m.explanation}</p>
+          {m.id === "standby_list" && <StandbyPanel />}
           {m.links.length > 0 && (
             <div className="link-row">
               {m.links.map((l) => (

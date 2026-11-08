@@ -14,6 +14,9 @@
   --warning: #d97706;
   --critical: #dc2626;
   --highlight: #db2777;
+  /* Status colours for small text: the bright ones above are under 4.5:1 on white. */
+  --success-text: #15803d;
+  --warning-text: #b45309;
   --tint: 12%;
   /* Logo colours (logo/kit/masters). Not tied to --accent, so the logo never recolours. */
   --logo-frame: #6d4aff;
@@ -37,6 +40,8 @@
   --warning: #fbbf24;
   --critical: #f87171;
   --highlight: #f472b6;
+  --success-text: #4ade80;
+  --warning-text: #fbbf24;
   --tint: 18%;
   --logo-frame: #8b73ff;
   --logo-target: #22d3ee;
@@ -1565,12 +1570,12 @@ kbd {
 }
 
 .good-text {
-  color: var(--success);
+  color: var(--success-text);
 }
 
 .bad-text,
 .warn-text {
-  color: var(--warning);
+  color: var(--warning-text);
 }
 
 /* The overlay window: transparent page, dark panel, cyan numbers, in any theme. */
@@ -1762,4 +1767,63 @@ html.overlay-doc #root {
 
 .update-banner svg {
   color: var(--accent);
+}
+
+/* ---------------------------------------------------------------- crash reports */
+
+.crash-banner {
+  background: color-mix(in srgb, var(--warning) var(--tint), var(--surface));
+}
+
+.crash-banner svg {
+  color: var(--warning);
+}
+
+.report-text {
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre-wrap;
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.crash-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.standby-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 12px 14px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+
+.standby-steps {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.standby-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }

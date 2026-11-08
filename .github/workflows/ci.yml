@@ -1,5 +1,6 @@
-# Every push and pull request: type check, interface tests, Rust tests, and the watcher's footprint
-# against its design-document budget (15 MB, 0.2% CPU).
+# Every push and pull request: type check, interface tests (including the WCAG contrast check),
+# Rust tests, end-to-end tests against the built app, and the watcher's footprint against its
+# design-document budget (15 MB, 0.2% CPU).
 name: CI
 
 on:
@@ -17,13 +18,13 @@ concurrency:
 jobs:
   test:
     runs-on: windows-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - uses: dtolnay/rust-toolchain@stable
@@ -36,17 +37,31 @@ jobs:
       - name: Type check and build the interface
         run: npm run build
 
-      - name: Interface tests
+      - name: Interface tests and contrast check
         run: npm test
 
       - name: Rust tests
         run: cargo test --workspace
 
+      - name: Build the app and test tools
+        run: |
+          npx tauri build --no-bundle
+          cargo build --release -p framewise-checks --example footprint_watch --example test_scene
+
+      - name: End-to-end tests (Playwright, real app)
+        run: npm run e2e
+
+      - name: Keep end-to-end results if they failed
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-results
+          path: test-results/
+          if-no-files-found: ignore
+
       - name: Watcher footprint (2 minutes, budget 15 MB / 0.2% CPU)
         shell: pwsh
         run: |
-          cargo build --release -p framewise
-          cargo build --release -p framewise-checks --example footprint_watch
           $w = Start-Process target\release\framewise.exe -ArgumentList '--watcher' -PassThru
           Start-Sleep 5
           if ($w.HasExited) { throw "The watcher exited straight away (code $($w.ExitCode))." }

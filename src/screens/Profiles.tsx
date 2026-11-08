@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Gamepad2, Pause, Pencil, Play, Plus, RefreshCw, Search, Trash2, TriangleAlert, X } from "lucide-react";
 import { api, errorText } from "../api";
+import { IssueModal } from "../components/Crash";
 import { Modal } from "../components/Modal";
 import { Badge, Switch, timeAgo } from "../components/ui";
 import type { GameRow, GamesList, ProfileActions, RunningApp, SessionView, WatcherInfo } from "../types";
@@ -35,6 +36,7 @@ export function Profiles() {
   const [editing, setEditing] = useState<GameRow | null>(null);
   const [adding, setAdding] = useState(false);
   const [portable, setPortable] = useState(false);
+  const [reporting, setReporting] = useState(false);
 
   useEffect(() => {
     api.appInfo().then((i) => setPortable(i.portable)).catch(() => {});
@@ -148,7 +150,22 @@ export function Profiles() {
               {`Profile on now: ${st.active_game}`}
             </Badge>
           )}
-          {st?.over_budget && <p className="hint warn-text">The watcher is using more than its budget. Please report this.</p>}
+          {st?.over_budget && (
+            <p className="hint warn-text">
+              The watcher is using more than its budget ({st.ram_mb.toFixed(1)} MB, {st.cpu_pct.toFixed(2)}% CPU against {watcher?.budget_ram_mb} MB and{" "}
+              {watcher?.budget_cpu_pct}%).{" "}
+              <button className="btn-link" onClick={() => setReporting(true)}>
+                Report it
+              </button>
+            </p>
+          )}
+          {reporting && st && (
+            <IssueModal
+              title="Report the watcher's footprint"
+              load={() => api.watcherBudgetIssue(st.ram_mb, st.peak_ram_mb, st.cpu_pct, st.profiles, !!st.active_game)}
+              onClose={() => setReporting(false)}
+            />
+          )}
         </div>
       </div>
 

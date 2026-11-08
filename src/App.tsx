@@ -19,6 +19,7 @@ import { MonitorScreen } from "./screens/Monitor";
 import { Myths, Settings } from "./screens/Other";
 import { Profiles } from "./screens/Profiles";
 import { UpdateBanner } from "./updates";
+import { CrashNotice } from "./components/Crash";
 import { Cleanup } from "./screens/Cleanup";
 import { History } from "./screens/History";
 import { Welcome } from "./screens/Welcome";
@@ -175,6 +176,7 @@ export default function App() {
           <RestartBadge onClick={() => go("history")} />
           <FootprintIndicator />
         </header>
+        <CrashNotice />
         <UpdateBanner />
         <main className="content" key={screen}>
           {screen === "home" && (

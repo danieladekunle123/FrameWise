@@ -198,6 +198,7 @@ struct Watcher {
 
 /// Entry point for `framewise.exe --watcher`.
 pub fn watcher_main() -> i32 {
+    crate::crashlog::install("watcher");
     // One watcher per user session.
     // SAFETY: the mutex handle lives for the whole process.
     let mutex = unsafe { CreateMutexW(None, true, MUTEX) };

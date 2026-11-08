@@ -59,7 +59,7 @@ pub fn myths() -> Vec<Myth> {
             id: "standby_list",
             claim: "Clearing the standby list fixes stutter",
             verdict: "Sometimes, on some PCs: an advanced, opt-in exception",
-            explanation: "On PCs with 8–16 GB of RAM, a few games have stuttered when the standby list filled up, and clearing it helped. On most PCs it does nothing or makes things worse, for the same reason RAM cleaners do. FrameWise will offer it as an advanced option, off by default, and only recommend it if benchmark mode shows a real gain on your PC.",
+            explanation: "On PCs with 8–16 GB of RAM, a few games have stuttered when the standby list filled up, and clearing it helped. On most PCs it does nothing or makes things worse, for the same reason RAM cleaners do. FrameWise offers it below as an advanced, one-off action, off by default. Benchmark a game before and after, and only keep using it if benchmark mode shows a real gain on your PC.",
             links: vec![link("Sysinternals RAMMap", "https://learn.microsoft.com/en-us/sysinternals/downloads/rammap")],
             advanced_exception: true,
         },

@@ -161,6 +161,9 @@ pub fn selftest() -> i32 {
     let r = h.call(&HelperRequest::Clean { category: CleanCategory::UserTemp }, Duration::from_secs(10));
     check("per-user cleanup refused by helper", matches!(&r, Err(e) if e.code == "refused"), format!("{r:?}"));
 
+    let r = h.call(&HelperRequest::PurgeStandbyList, Duration::from_secs(10));
+    check("standby purge needs real admin rights", matches!(&r, Err(e) if e.code == "purge_failed"), format!("{r:?}"));
+
     let r = h.call(&HelperRequest::RemoveDriverPackage { inf: "nvlddmkm.sys".into() }, Duration::from_secs(10));
     check("non-package driver name refused", matches!(&r, Err(e) if e.code == "refused"), format!("{r:?}"));
 
@@ -189,6 +192,7 @@ fn arg_after(args: &[String], flag: &str) -> Option<String> {
 
 /// Entry point for `framewise.exe --helper --pipe <name> --parent <pid>`.
 pub fn helper_main(args: &[String]) -> i32 {
+    crate::crashlog::install("helper");
     let (Some(pipe), Some(parent)) = (arg_after(args, "--pipe"), arg_after(args, "--parent").and_then(|p| p.parse::<u32>().ok())) else {
         return 2;
     };
@@ -273,6 +277,13 @@ fn handle(req: HelperRequest, ctx: &mut HelperCtx) -> HelperReply {
         HelperRequest::StopCapture => {
             ctx.capture = None;
             HelperReply::ok(json!(null))
+        }
+        HelperRequest::PurgeStandbyList => {
+            let before = framewise_checks::sensors::standby_bytes();
+            match system::purge_standby_list() {
+                Ok(()) => HelperReply::ok(json!({ "before": before, "after": framewise_checks::sensors::standby_bytes() })),
+                Err(e) => HelperReply::err("purge_failed", e),
+            }
         }
         HelperRequest::AllowMonitoringWithoutPrompt => match crate::capture::add_parent_user_to_perf_log_users(ctx.parent) {
             Ok(()) => HelperReply::ok(json!(null)),

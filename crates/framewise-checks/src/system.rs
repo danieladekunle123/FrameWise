@@ -292,6 +292,43 @@ pub fn active_scheme() -> R<String> {
     }
 }
 
+/// Empties the standby list (Windows' file cache in RAM). Needs admin rights: it enables
+/// SeProfileSingleProcessPrivilege on this process's token, then asks the memory manager to purge
+/// the list (NtSetSystemInformation(SystemMemoryListInformation, MemoryPurgeStandbyList)).
+pub fn purge_standby_list() -> Result<(), String> {
+    use windows::core::w;
+    use windows::Win32::Foundation::{CloseHandle, HANDLE, LUID};
+    use windows::Win32::Security::{AdjustTokenPrivileges, LookupPrivilegeValueW, LUID_AND_ATTRIBUTES, SE_PRIVILEGE_ENABLED, TOKEN_ADJUST_PRIVILEGES, TOKEN_PRIVILEGES, TOKEN_QUERY};
+    use windows::Win32::System::LibraryLoader::{GetModuleHandleW, GetProcAddress};
+    use windows::Win32::System::Threading::{GetCurrentProcess, OpenProcessToken};
+    const SYSTEM_MEMORY_LIST_INFORMATION: u32 = 80;
+    const MEMORY_PURGE_STANDBY_LIST: i32 = 4;
+    // SAFETY: token handle closed below; structs sized for the calls.
+    unsafe {
+        let mut token = HANDLE::default();
+        OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &mut token).map_err(|e| e.to_string())?;
+        let mut luid = LUID::default();
+        let looked = LookupPrivilegeValueW(None, w!("SeProfileSingleProcessPrivilege"), &mut luid);
+        let tp = TOKEN_PRIVILEGES { PrivilegeCount: 1, Privileges: [LUID_AND_ATTRIBUTES { Luid: luid, Attributes: SE_PRIVILEGE_ENABLED }] };
+        let adjusted = looked.is_ok() && AdjustTokenPrivileges(token, false, Some(&tp), 0, None, None).is_ok();
+        let not_all = windows::Win32::Foundation::GetLastError() == windows::Win32::Foundation::ERROR_NOT_ALL_ASSIGNED;
+        let _ = CloseHandle(token);
+        if !adjusted || not_all {
+            return Err("Clearing the standby list needs admin rights.".into());
+        }
+        type F = unsafe extern "system" fn(u32, *const core::ffi::c_void, u32) -> i32;
+        let m = GetModuleHandleW(w!("ntdll.dll")).map_err(|e| e.to_string())?;
+        let f = GetProcAddress(m, windows::core::s!("NtSetSystemInformation")).ok_or("NtSetSystemInformation is missing.")?;
+        let f: F = std::mem::transmute(f);
+        let cmd = MEMORY_PURGE_STANDBY_LIST;
+        let status = f(SYSTEM_MEMORY_LIST_INFORMATION, &cmd as *const i32 as *const _, 4);
+        if status < 0 {
+            return Err(format!("Windows refused to clear the standby list (status 0x{:08X}).", status as u32));
+        }
+    }
+    Ok(())
+}
+
 /// The power plans on this PC as (GUID, name), for the profile editor.
 pub fn power_plans() -> Vec<(String, String)> {
     let hklm = RegKey::predef(HKEY_LOCAL_MACHINE);

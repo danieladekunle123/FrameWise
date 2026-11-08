@@ -424,3 +424,31 @@ export interface SessionView {
   closed: string[];
   not_closed: string[];
 }
+
+// ------------------------------------------------------------------ crash reports
+
+export interface CrashReport {
+  id: string;
+  at: number;
+  version: string;
+  process: "app" | "watcher" | "helper" | "interface" | string;
+  message: string;
+  location: string | null;
+}
+
+export interface IssueDraft {
+  title: string;
+  body: string;
+  url: string;
+}
+
+export interface StandbyStatus {
+  standby_bytes: number | null;
+  ram_total_bytes: number;
+  may_help: boolean;
+}
+
+export interface PurgeResult {
+  before: number | null;
+  after: number | null;
+}

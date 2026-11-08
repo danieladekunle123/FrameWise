@@ -49,6 +49,8 @@ what each fix actually did.
 | 3 | **Live monitor** | FPS, 1% low, frame time, GPU and CPU load, temperatures, clocks, RAM and VRAM, with throttling warnings. |
 | 3 | **In-game overlay** | A small click-through panel over borderless and windowed games. Never injected into a game. |
 | 3 | **Benchmarks** | Record 30 s to 2 min of a repeatable scene (or press **Ctrl+Shift+F10** in game), then compare runs before and after a change. |
+| – | **Standby-list clearing** | An advanced, one-off option on the "What we don't do" page for 8–16 GB PCs, worth keeping only if a before/after benchmark shows a gain. |
+| – | **Crash reports** | Saved on the PC with paths and user names removed. You see the exact text and choose whether to open it as a GitHub issue. |
 | 4 | **Game profiles** | When a game starts: switch the power plan, pause or close background apps. Everything is put back when it exits, even after a crash or restart. |
 
 <table>
@@ -112,7 +114,8 @@ npx tauri build --no-bundle   # just the release exe (with PresentMon next to it
 
 ```bash
 npm run dev              # the interface alone in a browser, with sample data
-npm test                 # interface tests (Vitest)
+npm test                 # interface tests and the WCAG contrast check (Vitest)
+npm run e2e              # end-to-end tests against the built app (Playwright)
 cargo test --workspace   # checks, scoring, fixes, frame statistics, profiles and storage
 ```
 
@@ -192,6 +195,12 @@ Each phase of the design document has a gate. All four were run on the developme
 | 3 · Monitor and benchmark | Benchmark results repeat within normal variation | **Passed:** three runs within 1.8%; a 20% heavier load detected as −19.5% |
 | 4 · Game profiles | Watcher within 15 MB and 0.2% CPU over 10 minutes of game launches | **Passed:** 2.0 MB peak, 0.011% CPU, applied and restored 10/10 |
 
+**Automated on every push** (`.github/workflows/ci.yml`): the type check, 60 interface tests including a
+WCAG AA contrast check of both themes' colours, 58 Rust tests, end-to-end tests that drive the built app
+with Playwright (first run and scan; a safe fix applied, shown in History and undone; a benchmark of the
+test scene), and the watcher's footprint against its budget. The end-to-end tests use a throwaway data
+folder (`FRAMEWISE_DATA_DIR`, `WEBVIEW2_USER_DATA_FOLDER`), so they never touch your own data.
+
 <details>
 <summary><b>Phase 2: fixes, Cleanup and the helper</b></summary>
 
@@ -267,7 +276,9 @@ Everything stays on the PC, in `%LOCALAPPDATA%\FrameWise\framewise.db` (SQLite) 
 frame-time files next to it. There's no account and no telemetry. The network is used for two
 things: the ping check, which times a TCP handshake to 1.1.1.1 (or 8.8.8.8) and sends no data, and the
 update check, which downloads `latest.json` from this repository's releases when FrameWise starts (it
-can be turned off in Settings).
+can be turned off in Settings). If FrameWise crashes, a scrubbed report (no file paths, user names or
+process lists) is saved in `crashes` next to the database; it's only ever sent if you open it as a
+GitHub issue yourself.
 
 ## Known limits
 
@@ -299,6 +310,7 @@ crates/framewise-checks/      Shared logic used by every FrameWise process
   src/monitor.rs, sensors.rs  Monitor samples, throttling rules, CPU/GPU/RAM/VRAM readings
   src/profiles.rs             Profile actions, game matching, what may be paused or closed
   src/library.rs              Steam, Epic, Battle.net, Xbox app and Roblox detection
+  src/crash.rs                Crash reports and the scrubbing that keeps paths and names out
   examples/                   scan, probe, roundtrip, test_scene, games, footprint_watch and more
 src-tauri/                    The app core (Tauri)
   windows/                    Installer hooks: stop the watcher, clean up on uninstall (NSIS, MSI)
@@ -307,6 +319,7 @@ src-tauri/                    The app core (Tauri)
   src/capture.rs, live.rs     PresentMon capture, monitor, benchmarks, overlay
   src/watcher.rs, procctl.rs  The profile watcher, tray icon and process helpers
   src/db.rs                   SQLite storage and migrations (schema v4)
+  src/crashlog.rs, standby.rs Crash reports on disk; the standby-list option
 src/                          The interface (React + TypeScript)
   screens/                    Home, Quick wins, Profiles, Monitor, Cleanup, History, Settings
   components/Logo.tsx         The logo, inlined from logo/kit/masters
@@ -314,6 +327,7 @@ src/                          The interface (React + TypeScript)
 vendor/presentmon/            PresentMon 2.6.0 and its MIT licence
 logo/kit/                     The logo kit: masters, exports, guidelines, build script
 docs/screenshots/             README screenshots (sample data)
+e2e/                          Playwright end-to-end tests against the built app
 scripts/                      Footprint, admin, VM and release tests; the portable zip builder
 .github/workflows/            CI (tests, watcher footprint) and the draft-release build
 ```

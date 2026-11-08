@@ -419,6 +419,10 @@ function startBenchmark(req: BenchmarkRequest) {
   }, 1000);
 }
 
+// ------------------------------------------------------------------ crash reports (simulated: none)
+
+const crashes: { id: string; at: number; version: string; process: string; message: string; location: string | null }[] = [];
+
 // ------------------------------------------------------------------ game profiles (simulated)
 
 const BALANCED = "381b4222-f694-41f0-9685-ff5bb260df2e";
@@ -468,6 +472,27 @@ export async function handle<T>(cmd: string, args?: Record<string, unknown>): Pr
       return { version: "0.4.0 (browser preview)", data_dir: "%LOCALAPPDATA%\\FrameWise", db_ok: true, portable: false } as T;
     case "prepare_update":
       return undefined as T;
+    case "crash_reports":
+      return crashes as T;
+    case "crash_dismiss": {
+      const i = crashes.findIndex((c) => c.id === args?.id);
+      if (i >= 0) crashes.splice(i, 1);
+      return undefined as T;
+    }
+    case "crash_record":
+      return undefined as T;
+    case "standby_status":
+      return { standby_bytes: 9.2 * 1024 ** 3, ram_total_bytes: 32 * 1024 ** 3, may_help: false } as T;
+    case "standby_purge":
+      await progress(["Waiting for permission in the Windows prompt…"]);
+      emit("task-progress", "");
+      return { before: 9.2 * 1024 ** 3, after: 0.3 * 1024 ** 3 } as T;
+    case "crash_issue":
+    case "watcher_budget_issue": {
+      const title = cmd === "crash_issue" ? "Crash: watcher stopped unexpectedly (0.4.0)" : "Watcher over budget (0.4.0)";
+      const body = "**FrameWise 0.4.0** · Windows 11 (build 26300) · watcher\n\n(preview text)";
+      return { title, body, url: "https://github.com/danieladekunle123/FrameWise/issues/new" } as T;
+    }
     case "system_accent":
       return "#0078D4" as T;
     case "open_external":

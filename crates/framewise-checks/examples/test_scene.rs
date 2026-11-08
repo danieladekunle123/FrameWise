@@ -67,19 +67,27 @@ fn main() -> windows::core::Result<()> {
         let mut swap: Option<IDXGISwapChain> = None;
         let mut device: Option<ID3D11Device> = None;
         let mut ctx: Option<ID3D11DeviceContext> = None;
-        D3D11CreateDeviceAndSwapChain(
-            None,
-            D3D_DRIVER_TYPE_HARDWARE,
-            HMODULE::default(),
-            D3D11_CREATE_DEVICE_FLAG(0),
-            None,
-            D3D11_SDK_VERSION,
-            Some(&desc),
-            Some(&mut swap),
-            Some(&mut device),
-            None,
-            Some(&mut ctx),
-        )?;
+        // A GPU if there is one; otherwise Windows' software renderer (WARP), as on CI machines.
+        let mut created = Err(windows::core::Error::empty());
+        for driver in [D3D_DRIVER_TYPE_HARDWARE, D3D_DRIVER_TYPE_WARP] {
+            created = D3D11CreateDeviceAndSwapChain(
+                None,
+                driver,
+                HMODULE::default(),
+                D3D11_CREATE_DEVICE_FLAG(0),
+                None,
+                D3D11_SDK_VERSION,
+                Some(&desc),
+                Some(&mut swap),
+                Some(&mut device),
+                None,
+                Some(&mut ctx),
+            );
+            if created.is_ok() {
+                break;
+            }
+        }
+        created?;
         let (swap, device, ctx) = (swap.unwrap(), device.unwrap(), ctx.unwrap());
 
         let hlsl = format!(

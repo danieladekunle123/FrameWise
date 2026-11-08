@@ -9,6 +9,10 @@ use rusqlite::{params, Connection, OptionalExtension};
 use serde::Serialize;
 
 pub fn data_dir() -> PathBuf {
+    // Tests (and anyone who wants a separate profile) can point FrameWise at another folder.
+    if let Some(d) = std::env::var_os("FRAMEWISE_DATA_DIR").filter(|d| !d.is_empty()) {
+        return PathBuf::from(d);
+    }
     std::env::var_os("LOCALAPPDATA")
         .map(PathBuf::from)
         .unwrap_or_else(std::env::temp_dir)

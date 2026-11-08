@@ -187,6 +187,42 @@ pub fn gpu_busy(items: &[(String, f64)]) -> f32 {
     per_type.values().cloned().fold(0.0, f64::max).clamp(0.0, 100.0) as f32
 }
 
+/// Bytes on the standby list right now (Windows' file cache in RAM), from the Memory counters.
+/// Readable without admin rights.
+pub fn standby_bytes() -> Option<u64> {
+    let mut query: PdhQuery = 0;
+    // SAFETY: out-pointer to a local; the query is closed below.
+    if unsafe { PdhOpenQueryW(PCWSTR::null(), 0, &mut query) } != 0 {
+        return None;
+    }
+    let mut counters = Vec::new();
+    for path in [r"\Memory\Standby Cache Reserve Bytes", r"\Memory\Standby Cache Normal Priority Bytes", r"\Memory\Standby Cache Core Bytes"] {
+        let w: Vec<u16> = path.encode_utf16().chain(std::iter::once(0)).collect();
+        let mut c: PdhCounter = 0;
+        // SAFETY: w is NUL-terminated and outlives the call.
+        if unsafe { PdhAddEnglishCounterW(query, PCWSTR(w.as_ptr()), 0, &mut c) } == 0 {
+            counters.push(c);
+        }
+    }
+    // SAFETY: valid query.
+    let ok = unsafe { PdhCollectQueryData(query) } == 0;
+    let total = if ok && !counters.is_empty() {
+        Some(counters.iter().filter_map(|c| large(*c)).sum())
+    } else {
+        None
+    };
+    // SAFETY: our own query.
+    unsafe { PdhCloseQuery(query) };
+    total
+}
+
+fn large(c: PdhCounter) -> Option<u64> {
+    let mut v = PDH_FMT_COUNTERVALUE::default();
+    // SAFETY: out-pointer to a local; the union member matches the requested format.
+    let r = unsafe { PdhGetFormattedCounterValue(c, PDH_FMT_LARGE, None, &mut v) };
+    (r == 0 && v.CStatus == 0).then(|| unsafe { v.Anonymous.largeValue } as u64)
+}
+
 #[cfg(test)]
 mod tests {
     #[test]

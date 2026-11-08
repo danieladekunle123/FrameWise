@@ -7,6 +7,8 @@ import { topIssues } from "./screens/Home";
 import { Cleanup } from "./screens/Cleanup";
 import { MonitorScreen } from "./screens/Monitor";
 import { Profiles } from "./screens/Profiles";
+import { Myths } from "./screens/Other";
+import { ErrorBoundary } from "./components/Crash";
 import { readableOn } from "./theme";
 import type { Finding, ScanResult } from "./types";
 import mockScan from "./mock-scan.json";
@@ -130,6 +132,28 @@ describe("IssueCard", () => {
     fireEvent.click(within(dlg).getByRole("button", { name: "Save and turn on" }));
     expect(await screen.findByText(/Epic Games · pauses discord/, {}, { timeout: 3000 })).toBeTruthy();
     expect((await screen.findByRole("switch", { name: "Profile for Fortnite" })).getAttribute("aria-checked")).toBe("true");
+  });
+
+  it("shows a calm error screen instead of a blank window when the interface fails", () => {
+    const Broken = () => {
+      throw new Error("boom");
+    };
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+    render(
+      <ErrorBoundary>
+        <Broken />
+      </ErrorBoundary>,
+    );
+    expect(screen.getByText("Something went wrong in this window")).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Reload FrameWise" })).toBeTruthy();
+    spy.mockRestore();
+  });
+
+  it("says when clearing the standby list isn't expected to help, and reports what it cleared", async () => {
+    render(withFixes(<Myths />));
+    expect(await screen.findByText(/isn't expected to help here/, {}, { timeout: 3000 })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: /Clear the standby list now/ }));
+    expect(await screen.findByText(/went from 9\.2 GB to 307 MB/, {}, { timeout: 5000 })).toBeTruthy();
   });
 
   it("never ticks a Cleanup category it couldn't measure", async () => {

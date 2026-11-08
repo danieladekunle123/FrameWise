@@ -6,6 +6,7 @@
 
 mod capture;
 mod changes;
+mod crashlog;
 mod db;
 mod elevate;
 mod footprint;
@@ -14,6 +15,7 @@ mod memory;
 mod pipe;
 mod procctl;
 mod profiles;
+mod standby;
 mod watcher;
 
 pub use elevate::helper_main;
@@ -232,6 +234,7 @@ fn open_external(uri: String) -> CmdResult<()> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    crashlog::install("app");
     let conn = db::open().ok();
     let meter = FootprintMeter::default();
 
@@ -301,6 +304,13 @@ pub fn run() {
             myths,
             app_info,
             prepare_update,
+            crashlog::crash_reports,
+            crashlog::crash_dismiss,
+            crashlog::crash_record,
+            crashlog::crash_issue,
+            crashlog::watcher_budget_issue,
+            standby::standby_status,
+            standby::standby_purge,
             system_accent,
             open_external,
             changes::apply_fix,
