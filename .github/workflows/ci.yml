@@ -48,6 +48,19 @@ jobs:
           npx tauri build --no-bundle
           cargo build --release -p framewise-checks --example footprint_watch --example test_scene
 
+      - name: WebView2 runtime (the window needs it)
+        shell: pwsh
+        run: |
+          $keys = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}', 'HKLM:\SOFTWARE\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}'
+          $v = $keys | ForEach-Object { (Get-ItemProperty $_ -ErrorAction SilentlyContinue).pv } | Where-Object { $_ -and $_ -ne '0.0.0.0' } | Select-Object -First 1
+          if ($v) { "WebView2 runtime $v is installed." } else {
+            "Installing the WebView2 runtime (Microsoft's Evergreen bootstrapper)..."
+            Invoke-WebRequest 'https://go.microsoft.com/fwlink/p/?LinkId=2124703' -OutFile "$env:RUNNER_TEMP\MicrosoftEdgeWebview2Setup.exe"
+            Start-Process "$env:RUNNER_TEMP\MicrosoftEdgeWebview2Setup.exe" -ArgumentList '/silent', '/install' -Wait
+            $v = $keys | ForEach-Object { (Get-ItemProperty $_ -ErrorAction SilentlyContinue).pv } | Where-Object { $_ } | Select-Object -First 1
+            "WebView2 runtime now: $v"
+          }
+
       - name: End-to-end tests (Playwright, real app)
         run: npm run e2e
 

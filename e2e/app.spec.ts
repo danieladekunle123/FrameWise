@@ -6,7 +6,7 @@
 // the test scene (skipped unless frame capture works without a UAC prompt, as on CI runners).
 import { chromium, expect, test, type Browser, type Page } from "@playwright/test";
 import { spawn, type ChildProcess } from "node:child_process";
-import { existsSync, mkdtempSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
@@ -38,13 +38,24 @@ test.beforeAll(async () => {
     },
     stdio: "ignore",
   });
-  for (let i = 0; i < 80; i++) {
+  let up = false;
+  for (let i = 0; i < 120 && !up; i++) {
     try {
-      if ((await fetch(`http://127.0.0.1:${PORT}/json/version`)).ok) break;
+      up = (await fetch(`http://127.0.0.1:${PORT}/json/version`)).ok;
     } catch {
       /* not up yet */
     }
-    await sleep(500);
+    if (!up) await sleep(500);
+  }
+  if (!up) {
+    // Say why: the app exited (with any crash report it saved), or its window never started.
+    const crashes = path.join(dataDir, "crashes");
+    const reports = existsSync(crashes) ? readdirSync(crashes).map((f) => readFileSync(path.join(crashes, f), "utf8")) : [];
+    throw new Error(
+      `FrameWise's window didn't open its debug port within 60 s. App ${app.exitCode === null ? "still running" : `exited with code ${app.exitCode}`}.` +
+        (reports.length ? ` Crash reports: ${reports.join(" | ")}` : " No crash report.") +
+        " Is the WebView2 runtime installed?",
+    );
   }
   browser = await chromium.connectOverCDP(`http://127.0.0.1:${PORT}`);
   const ctx = browser.contexts()[0];
