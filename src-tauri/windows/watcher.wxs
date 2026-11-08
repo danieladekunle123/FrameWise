@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FrameWise MSI custom actions (Tauri bundle.windows.wix.fragmentPaths / componentGroupRefs).
+
+     The game-profile watcher (framewise.exe watcher mode) keeps running after the window closes, so:
+     - before any install, repair, update or removal, the already-installed exe is asked to stop it
+       (it puts back any active profile first; on a fresh install there's no exe and this is skipped);
+     - on a full uninstall (not an update), its start-with-Windows entry is removed too.
+     Both run as the signed-in user, where the watcher and its startup entry live. -->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!-- Referenced from tauri.conf.json so the linker includes this fragment. -->
+    <ComponentGroup Id="FwWatcherActions" />
+    <CustomAction Id="FwStopWatcher" Directory="INSTALLDIR" ExeCommand="&quot;[INSTALLDIR]framewise.exe&quot; --stop-watcher" Execute="immediate" Impersonate="yes" Return="ignore" />
+    <CustomAction Id="FwUninstallCleanup" Directory="INSTALLDIR" ExeCommand="&quot;[INSTALLDIR]framewise.exe&quot; --uninstall-cleanup" Execute="immediate" Impersonate="yes" Return="ignore" />
+    <InstallExecuteSequence>
+      <Custom Action="FwStopWatcher" After="CostFinalize">Installed OR WIX_UPGRADE_DETECTED</Custom>
+      <Custom Action="FwUninstallCleanup" After="FwStopWatcher">REMOVE~="ALL" AND NOT UPGRADINGPRODUCTCODE</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+</Wix>

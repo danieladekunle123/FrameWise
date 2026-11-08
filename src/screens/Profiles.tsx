@@ -34,6 +34,11 @@ export function Profiles() {
   const [query, setQuery] = useState("");
   const [editing, setEditing] = useState<GameRow | null>(null);
   const [adding, setAdding] = useState(false);
+  const [portable, setPortable] = useState(false);
+
+  useEffect(() => {
+    api.appInfo().then((i) => setPortable(i.portable)).catch(() => {});
+  }, []);
 
   const load = useCallback(async () => {
     try {
@@ -104,7 +109,12 @@ export function Profiles() {
             put back when it exits, even if the PC restarts mid-game. A small watcher does this so FrameWise itself can stay closed. It never
             touches the game.
           </p>
-          <div className="watcher-row">
+          {portable && (
+            <p className="hint warn-text">
+              This is the portable build, which never runs anything in the background, so profiles are off. Install FrameWise to use them.
+            </p>
+          )}
+          <div className="watcher-row" hidden={portable}>
             <Switch checked={on} onChange={enable} label="Profiles on" />
             <strong>{on ? "Profiles on" : "Profiles off"}</strong>
             <span className="hint">

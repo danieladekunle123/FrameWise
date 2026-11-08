@@ -107,6 +107,7 @@ export interface AppInfo {
   version: string;
   data_dir: string;
   db_ok: boolean;
+  portable: boolean;
 }
 
 // ------------------------------------------------------------------ phase 2: changes, undo, cleanup

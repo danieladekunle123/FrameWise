@@ -465,7 +465,9 @@ export async function handle<T>(cmd: string, args?: Record<string, unknown>): Pr
     case "myths":
       return myths as T;
     case "app_info":
-      return { version: "0.4.0 (browser preview)", data_dir: "%LOCALAPPDATA%\\FrameWise", db_ok: true } as T;
+      return { version: "0.4.0 (browser preview)", data_dir: "%LOCALAPPDATA%\\FrameWise", db_ok: true, portable: false } as T;
+    case "prepare_update":
+      return undefined as T;
     case "system_accent":
       return "#0078D4" as T;
     case "open_external":

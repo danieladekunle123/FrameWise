@@ -54,6 +54,7 @@ export const api = {
   liveStats: () => call<LiveStats>("live_stats"),
   myths: () => call<Myth[]>("myths"),
   appInfo: () => call<AppInfo>("app_info"),
+  prepareUpdate: () => call<void>("prepare_update"),
   systemAccent: () => call<string | null>("system_accent"),
   openExternal: (uri: string) => call<void>("open_external", { uri }),
   // Phase 2

@@ -129,6 +129,30 @@ pub fn autostart() -> bool {
         .is_ok()
 }
 
+/// ramewise.exe --stop-watcher: asks a running watcher to put everything back and exit, and waits
+/// up to 5 seconds. Exit code 0 when no watcher is left running.
+pub fn stop_watcher() -> i32 {
+    if !is_running() {
+        return 0;
+    }
+    quit();
+    for _ in 0..50 {
+        if !is_running() {
+            return 0;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
+    1
+}
+
+/// `framewise.exe --uninstall-cleanup`: stops the watcher and removes its start-with-Windows entry.
+pub fn uninstall_cleanup() -> i32 {
+    let stopped = stop_watcher();
+    let _ = set_autostart(false);
+    let _ = std::fs::remove_file(pid_file());
+    stopped
+}
+
 pub fn pid_file() -> std::path::PathBuf {
     db::data_dir().join("watcher.pid")
 }

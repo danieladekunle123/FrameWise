@@ -5,6 +5,14 @@ fn main() {
     // `framewise.exe --helper ...` is the elevated helper (see src/elevate.rs): no window, no
     // WebView, just the allowlisted request loop.
     let args: Vec<String> = std::env::args().collect();
+    // Used by the installer before updating or uninstalling: stop the watcher so its exe isn't locked.
+    if args.get(1).map(String::as_str) == Some("--stop-watcher") {
+        std::process::exit(framewise_lib::stop_watcher());
+    }
+    // Used on uninstall: stop the watcher and remove its start-with-Windows entry.
+    if args.get(1).map(String::as_str) == Some("--uninstall-cleanup") {
+        std::process::exit(framewise_lib::uninstall_cleanup());
+    }
     if args.get(1).map(String::as_str) == Some("--watcher") {
         std::process::exit(framewise_lib::watcher_main());
     }

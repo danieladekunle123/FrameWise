@@ -11,6 +11,7 @@ import { api } from "../api";
 import { Badge, Switch } from "../components/ui";
 import type { AppInfo, Myth } from "../types";
 import type { ThemePref } from "../theme";
+import { UpdatesSettings } from "../updates";
 
 // ------------------------------------------------------------------ myths
 
@@ -159,11 +160,18 @@ export function Settings({ themePref, setThemePref, accentEnabled, setAccentEnab
             <strong>Everything stays on this PC</strong>
             <p className="hint">
               No account, no telemetry, no ads. Scans and settings are stored locally
-              {info ? ` in ${info.data_dir}` : ""}. The only network use is the ping test, which opens a connection to a
-              public DNS server and sends no data.
+              {info ? ` in ${info.data_dir}` : ""}. The network is used for two things: the ping test, which opens a connection
+              to a public DNS server and sends no data, and the update check below.
             </p>
           </div>
         </div>
+      </section>
+
+      <section className="card">
+        <div className="card-pad" style={{ paddingBottom: 4 }}>
+          <h2 className="section-title">Updates</h2>
+        </div>
+        <UpdatesSettings info={info} />
       </section>
 
       <section className="card">

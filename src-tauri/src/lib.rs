@@ -17,7 +17,7 @@ mod profiles;
 mod watcher;
 
 pub use elevate::helper_main;
-pub use watcher::watcher_main;
+pub use watcher::{stop_watcher, uninstall_cleanup, watcher_main};
 #[cfg(debug_assertions)]
 pub use elevate::selftest as helper_selftest;
 #[cfg(debug_assertions)]
@@ -169,6 +169,20 @@ struct AppInfo {
     version: String,
     data_dir: String,
     db_ok: bool,
+    /// Running from the portable zip: no watcher, no installer updates.
+    portable: bool,
+}
+
+/// The portable build is the release exe with a `framewise.portable` file next to it.
+pub(crate) fn is_portable() -> bool {
+    std::env::current_exe().ok().and_then(|e| e.parent().map(|d| d.join("framewise.portable").is_file())).unwrap_or(false)
+}
+
+/// Before an update installs: stop the watcher so its exe can be replaced. The app starts it again
+/// after the update if profiles are on.
+#[tauri::command]
+fn prepare_update() {
+    watcher::stop_watcher();
 }
 
 #[tauri::command]
@@ -177,6 +191,7 @@ fn app_info(state: State<'_, AppState>) -> AppInfo {
         version: env!("CARGO_PKG_VERSION").to_string(),
         data_dir: db::data_dir().to_string_lossy().to_string(),
         db_ok: state.db.lock().map(|g| g.is_some()).unwrap_or(false),
+        portable: is_portable(),
     }
 }
 
@@ -230,6 +245,8 @@ pub fn run() {
             pending_confirm: Mutex::new(HashSet::new()),
             live: live::Live::default(),
         })
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
         .setup(move |app| {
             if let Some(window) = app.get_webview_window("main") {
                 memory::watch(&window);
@@ -254,6 +271,14 @@ pub fn run() {
                 );
                 let _ = app.global_shortcut().register(live::HOTKEY);
             }
+            // Profiles are on but the watcher isn't running (after an update, or it was killed):
+            // start it again. It also starts with Windows; this covers the time until then.
+            if !is_portable() && watcher::autostart() && !watcher::is_running() {
+                let on = app.state::<AppState>().db.lock().ok().and_then(|g| g.as_ref().and_then(|c| db::setting(c, watcher::SETTING_ENABLED).ok().flatten()));
+                if on.as_deref() == Some("1") {
+                    let _ = watcher::start();
+                }
+            }
             // The meter writes to its own connection so it never waits on a scan.
             let persist_conn = Mutex::new(db::open().ok());
             meter.start(move |at, ram, cpu| {
@@ -275,6 +300,7 @@ pub fn run() {
             live_stats,
             myths,
             app_info,
+            prepare_update,
             system_accent,
             open_external,
             changes::apply_fix,

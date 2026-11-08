@@ -18,6 +18,7 @@ import { QuickWins } from "./screens/QuickWins";
 import { MonitorScreen } from "./screens/Monitor";
 import { Myths, Settings } from "./screens/Other";
 import { Profiles } from "./screens/Profiles";
+import { UpdateBanner } from "./updates";
 import { Cleanup } from "./screens/Cleanup";
 import { History } from "./screens/History";
 import { Welcome } from "./screens/Welcome";
@@ -174,6 +175,7 @@ export default function App() {
           <RestartBadge onClick={() => go("history")} />
           <FootprintIndicator />
         </header>
+        <UpdateBanner />
         <main className="content" key={screen}>
           {screen === "home" && (
             <Home scan={scan} scanning={scanning} error={error} onScan={runScan} onOpenCheck={openCheck} onRecheck={recheck} restorePoint={restorePoint} onOpenBenchmark={() => go("monitor")} />

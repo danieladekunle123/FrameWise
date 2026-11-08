@@ -8,7 +8,9 @@ default-run = "framewise"
 
 [lib]
 name = "framewise_lib"
-crate-type = ["staticlib", "cdylib", "rlib"]
+# Desktop only: the staticlib/cdylib outputs Tauri's template adds are for mobile, and the MSI
+# would otherwise ship the unused framewise_lib.dll.
+crate-type = ["rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
@@ -22,6 +24,8 @@ serde_json.workspace = true
 rusqlite = { version = "0.32", features = ["bundled"] }
 sysinfo = { version = "0.32", default-features = false, features = ["system"] }
 sha2 = "0.10"
+tauri-plugin-updater = "2"
+tauri-plugin-process = "2"
 
 [target.'cfg(windows)'.dependencies]
 winreg = "0.52"

@@ -26,8 +26,16 @@
       "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost"
     }
   },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEZEOUI4NzVCNEYxRDA2MkEKUldRcUJoMVBXNGViL1hXOG5CUlk4cXROUUVRck9LTXVibDhKYVdURHlSaHQ5dk1CV2xPaGpQRmsK",
+      "endpoints": ["https://github.com/danieladekunle123/FrameWise/releases/latest/download/latest.json"],
+      "windows": { "installMode": "passive" }
+    }
+  },
   "bundle": {
     "active": true,
+    "createUpdaterArtifacts": true,
     "targets": ["msi", "nsis"],
     "category": "Utility",
     "resources": {
@@ -36,7 +44,9 @@
     },
     "shortDescription": "The honest Windows gaming optimiser",
     "longDescription": "FrameWise finds the settings and hardware issues that genuinely cost FPS, fixes them reversibly, and proves the gain with benchmarks.",
-    "copyright": "Daniel",
+    "copyright": "Copyright (c) 2026 Daniel Adekunle",
+    "publisher": "Daniel Adekunle",
+    "homepage": "https://github.com/danieladekunle123/FrameWise",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -44,7 +54,17 @@
       "icons/icon.ico"
     ],
     "windows": {
-      "webviewInstallMode": { "type": "downloadBootstrapper" }
+      "webviewInstallMode": { "type": "downloadBootstrapper" },
+      "nsis": {
+        "installMode": "perMachine",
+        "installerHooks": "./windows/hooks.nsh",
+        "displayLanguageSelector": false
+      },
+      "wix": {
+        "language": "en-US",
+        "fragmentPaths": ["./windows/watcher.wxs"],
+        "componentGroupRefs": ["FwWatcherActions"]
+      }
     }
   }
 }

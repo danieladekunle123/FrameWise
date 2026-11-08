@@ -78,7 +78,27 @@ what each fix actually did.
 
 <sub>Screenshots use the interface's built-in sample data, not a real PC.</sub>
 
-## Getting started
+## Install
+
+Each release on the [Releases page](https://github.com/danieladekunle123/FrameWise/releases) has
+three downloads:
+
+| Download | Choose it if |
+| --- | --- |
+| **FrameWise_x.y.z_x64-setup.exe** | You want the normal install (recommended). |
+| FrameWise_x.y.z_x64_en-US.msi | You or your IT tools prefer MSI packages. |
+| FrameWise_x.y.z_x64_portable.zip | You don't want anything installed. No game profiles, no automatic updates. |
+
+The installers put FrameWise in Program Files for all users, because its admin helper must live where
+only administrators can change it. FrameWise checks for updates when it starts (you can turn this off
+in Settings), verifies each update's signature, and only installs when you click **Install and
+restart**. Uninstalling stops the game-profile watcher and removes its startup entry.
+
+> [!IMPORTANT]
+> Releases aren't code-signed yet, so Windows SmartScreen warns about the installer, and the
+> permission prompt for machine-wide fixes shows "Publisher: Unknown". See [RELEASING.md](RELEASING.md).
+
+## Getting started (building from source)
 
 **You need:** Windows 10 or 11 with WebView2 (built into Windows 11), Rust (stable, MSVC toolchain)
 with Visual Studio Build Tools (C++ workload), and Node.js 20 or later.
@@ -105,7 +125,9 @@ cargo run -p framewise-checks --example games     # games found for profiles
 
 > [!NOTE]
 > Release builds must go through `npx tauri build`. A plain `cargo build --release` doesn't embed
-> the interface.
+> the interface. Installers, signing keys and the release workflow are described in
+> [RELEASING.md](RELEASING.md); every push runs the tests and the watcher's footprint check in GitHub
+> Actions (`.github/workflows/ci.yml`).
 
 ## How it works
 
@@ -242,8 +264,10 @@ Tests used copies of the test scene as a "game" (`game_sim.exe`) and two backgro
 ## Data and privacy
 
 Everything stays on the PC, in `%LOCALAPPDATA%\FrameWise\framewise.db` (SQLite) plus benchmark
-frame-time files next to it. There's no account and no telemetry. The only network use is the
-ping check, which times a TCP handshake to 1.1.1.1 (or 8.8.8.8) and sends no data.
+frame-time files next to it. There's no account and no telemetry. The network is used for two
+things: the ping check, which times a TCP handshake to 1.1.1.1 (or 8.8.8.8) and sends no data, and the
+update check, which downloads `latest.json` from this repository's releases when FrameWise starts (it
+can be turned off in Settings).
 
 ## Known limits
 
@@ -277,6 +301,7 @@ crates/framewise-checks/      Shared logic used by every FrameWise process
   src/library.rs              Steam, Epic, Battle.net, Xbox app and Roblox detection
   examples/                   scan, probe, roundtrip, test_scene, games, footprint_watch and more
 src-tauri/                    The app core (Tauri)
+  windows/                    Installer hooks: stop the watcher, clean up on uninstall (NSIS, MSI)
   src/changes.rs              Change pipeline, Undo, Fix all safe, Cleanup and report
   src/elevate.rs, pipe.rs     The elevated helper and its user-only named pipe
   src/capture.rs, live.rs     PresentMon capture, monitor, benchmarks, overlay
@@ -289,7 +314,8 @@ src/                          The interface (React + TypeScript)
 vendor/presentmon/            PresentMon 2.6.0 and its MIT licence
 logo/kit/                     The logo kit: masters, exports, guidelines, build script
 docs/screenshots/             README screenshots (sample data)
-scripts/                      Footprint, admin and VM test scripts
+scripts/                      Footprint, admin, VM and release tests; the portable zip builder
+.github/workflows/            CI (tests, watcher footprint) and the draft-release build
 ```
 
 </details>

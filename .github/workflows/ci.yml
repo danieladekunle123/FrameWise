@@ -1,0 +1,56 @@
+# Every push and pull request: type check, interface tests, Rust tests, and the watcher's footprint
+# against its design-document budget (15 MB, 0.2% CPU).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install
+        run: npm ci
+
+      - name: Type check and build the interface
+        run: npm run build
+
+      - name: Interface tests
+        run: npm test
+
+      - name: Rust tests
+        run: cargo test --workspace
+
+      - name: Watcher footprint (2 minutes, budget 15 MB / 0.2% CPU)
+        shell: pwsh
+        run: |
+          cargo build --release -p framewise
+          cargo build --release -p framewise-checks --example footprint_watch
+          $w = Start-Process target\release\framewise.exe -ArgumentList '--watcher' -PassThru
+          Start-Sleep 5
+          if ($w.HasExited) { throw "The watcher exited straight away (code $($w.ExitCode))." }
+          & target\release\examples\footprint_watch.exe $w.Id 120 15 0.2
+          $code = $LASTEXITCODE
+          & target\release\framewise.exe --stop-watcher
+          exit $code

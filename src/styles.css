@@ -1747,3 +1747,19 @@ html.overlay-doc #root {
   max-height: 300px;
   overflow-y: auto;
 }
+
+/* ---------------------------------------------------------------- updates */
+
+.update-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--accent) var(--tint), var(--surface));
+  color: var(--text);
+}
+
+.update-banner svg {
+  color: var(--accent);
+}

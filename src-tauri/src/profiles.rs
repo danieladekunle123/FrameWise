@@ -1,4 +1,4 @@
-﻿//! Game profile commands for the interface (phase 4). The watcher (`watcher.rs`) applies the
+//! Game profile commands for the interface (phase 4). The watcher (`watcher.rs`) applies the
 //! profiles; these commands only read and save them and start, pause or stop the watcher.
 
 use framewise_checks::evaluate::KNOWN_OVERLAYS;
@@ -151,6 +151,9 @@ pub fn watcher_status(state: State<'_, AppState>) -> CmdResult<WatcherInfo> {
 /// Turns profiles on (start the watcher now and with Windows) or off (put everything back, stop).
 #[tauri::command]
 pub fn watcher_enable(state: State<'_, AppState>, on: bool) -> CmdResult<WatcherInfo> {
+    if on && crate::is_portable() {
+        return Err("Game profiles need the installed version: the portable build doesn't run anything in the background.".into());
+    }
     with_db(&state, |c| db::set_setting(c, watcher::SETTING_ENABLED, if on { "1" } else { "0" }))?;
     watcher::set_autostart(on)?;
     if on {
