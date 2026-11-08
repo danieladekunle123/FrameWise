@@ -5,7 +5,7 @@
 // per-user Windows setting and puts it back; skipped if this PC needs no safe fix); a benchmark of
 // the test scene (skipped unless frame capture works without a UAC prompt, as on CI runners).
 import { chromium, expect, test, type Browser, type Page } from "@playwright/test";
-import { spawn, type ChildProcess } from "node:child_process";
+import { execFileSync, spawn, type ChildProcess } from "node:child_process";
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -51,10 +51,23 @@ test.beforeAll(async () => {
     // Say why: the app exited (with any crash report it saved), or its window never started.
     const crashes = path.join(dataDir, "crashes");
     const reports = existsSync(crashes) ? readdirSync(crashes).map((f) => readFileSync(path.join(crashes, f), "utf8")) : [];
+    // What's in the data folder (did WebView2 start at all?), the WebView2 processes and their
+    // arguments (was the debug port passed?), and the app's windows.
+    const ps = (script: string) => {
+      try {
+        return execFileSync("powershell", ["-NoProfile", "-Command", script], { encoding: "utf8", timeout: 30_000 }).trim();
+      } catch (e) {
+        return `(failed: ${e})`;
+      }
+    };
+    const files = ps(`Get-ChildItem -Recurse -Depth 3 '${dataDir}' | Select-Object -First 40 -ExpandProperty FullName`);
+    const webviews = ps(`Get-CimInstance Win32_Process -Filter "Name='msedgewebview2.exe'" | Where-Object { $_.CommandLine -notmatch '--type=' } | ForEach-Object { $_.ProcessId.ToString() + ' ' + $_.CommandLine }`);
+    const windows = ps(`Get-Process framewise -ErrorAction SilentlyContinue | ForEach-Object { $_.Id.ToString() + ' session ' + $_.SessionId + ' window [' + $_.MainWindowTitle + ']' }`);
+    const ports = ps(`Get-NetTCPConnection -State Listen -OwningProcess (Get-Process msedgewebview2 -ErrorAction SilentlyContinue).Id -ErrorAction SilentlyContinue | ForEach-Object { $_.LocalAddress + ':' + $_.LocalPort }`);
     throw new Error(
       `FrameWise's window didn't open its debug port within 60 s. App ${app.exitCode === null ? "still running" : `exited with code ${app.exitCode}`}.` +
         (reports.length ? ` Crash reports: ${reports.join(" | ")}` : " No crash report.") +
-        " Is the WebView2 runtime installed?",
+        `\nApp: ${windows || "(none)"}\nWebView2 browser processes:\n${webviews || "(none)"}\nWebView2 listening on: ${ports || "(nothing)"}\nData folder:\n${files || "(empty)"}`,
     );
   }
   browser = await chromium.connectOverCDP(`http://127.0.0.1:${PORT}`);
