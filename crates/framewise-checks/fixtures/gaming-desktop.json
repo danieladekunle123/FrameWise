@@ -1,0 +1,84 @@
+{
+  "collected_at": 1793923200,
+  "os": { "build": 26100, "display_version": "24H2" },
+  "is_laptop": false,
+  "cpu_name": "AMD Ryzen 7 5800X3D 8-Core Processor",
+  "memory_modules": [
+    {
+      "capacity_bytes": 17179869184,
+      "speed": 2133,
+      "configured_speed": 2133,
+      "manufacturer": "Corsair",
+      "part_number": "CMK32GX4M2D3600C18",
+      "bank_label": "P0 CHANNEL A",
+      "device_locator": "DIMM 1",
+      "smbios_memory_type": 26
+    },
+    {
+      "capacity_bytes": 17179869184,
+      "speed": 2133,
+      "configured_speed": 2133,
+      "manufacturer": "Corsair",
+      "part_number": "CMK32GX4M2D3600C18",
+      "bank_label": "P0 CHANNEL B",
+      "device_locator": "DIMM 1",
+      "smbios_memory_type": 26
+    }
+  ],
+  "displays": [
+    {
+      "device_name": "\\\\.\\DISPLAY1",
+      "adapter": "NVIDIA GeForce RTX 3070",
+      "monitor": "Generic PnP Monitor",
+      "primary": true,
+      "width": 2560,
+      "height": 1440,
+      "current_hz": 60,
+      "max_hz_at_resolution": 165,
+      "max_hz_any": 165
+    }
+  ],
+  "gpus": [
+    {
+      "name": "NVIDIA GeForce RTX 3070",
+      "vendor": "NVIDIA",
+      "driver_version": "32.0.15.6094",
+      "driver_date": "20260905",
+      "pnp_device_id": "PCI\\VEN_10DE&DEV_2484&SUBSYS_00000000&REV_A1"
+    }
+  ],
+  "drives": [
+    { "mount": "C:\\", "media": "ssd", "total_bytes": 1000202039296, "free_bytes": 312000000000 },
+    { "mount": "D:\\", "media": "hdd", "total_bytes": 2000398934016, "free_bytes": 640000000000 }
+  ],
+  "system_drive": "C:",
+  "game_installs": [
+    { "name": "Cyberpunk 2077", "launcher": "Steam", "path": "D:\\SteamLibrary\\steamapps\\common\\Cyberpunk 2077" },
+    { "name": "Elden Ring", "launcher": "Steam", "path": "D:\\SteamLibrary\\steamapps\\common\\ELDEN RING" },
+    { "name": "Counter-Strike 2", "launcher": "Steam", "path": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive" },
+    { "name": "Fortnite", "launcher": "Epic", "path": "C:\\Program Files\\Epic Games\\Fortnite" }
+  ],
+  "processes": ["discord.exe", "epicgameslauncher.exe", "icue.exe", "nvidia overlay.exe", "steam.exe", "explorer.exe"],
+  "startup_entries": [
+    { "name": "Discord", "location": "Current user (registry)", "enabled": true },
+    { "name": "Steam", "location": "Current user (registry)", "enabled": true },
+    { "name": "EpicGamesLauncher", "location": "Current user (registry)", "enabled": true },
+    { "name": "OneDrive", "location": "Current user (registry)", "enabled": true },
+    { "name": "Spotify", "location": "Current user (registry)", "enabled": true },
+    { "name": "iCUE", "location": "All users (registry)", "enabled": true },
+    { "name": "SecurityHealth", "location": "All users (registry)", "enabled": true },
+    { "name": "RtkAudUService", "location": "All users (registry)", "enabled": true },
+    { "name": "Adobe Updater", "location": "All users, 32-bit (registry)", "enabled": true },
+    { "name": "Battle.net", "location": "Current user (registry)", "enabled": true },
+    { "name": "EADesktop", "location": "Current user (registry)", "enabled": true },
+    { "name": "Teams", "location": "Current user (registry)", "enabled": false }
+  ],
+  "power": { "active_scheme": "381b4222-f694-41f0-9685-ff5bb260df2e", "ac_overlay": null },
+  "game_mode_auto": null,
+  "hags_mode": 1,
+  "hags_caps": { "supported": true, "enabled": false },
+  "dx_user_global_settings": "VRROptimizeEnable=0;",
+  "hvci_enabled": 1,
+  "network": { "target": "1.1.1.1", "samples_ms": [14.2, 13.8, 15.1, 14.0, 13.9, 14.6, 14.3, 14.1], "failures": 0 },
+  "collection_errors": []
+}

@@ -1,0 +1,17 @@
+﻿# Dependencies and build output
+node_modules/
+dist/
+target/
+.vite/
+*.tsbuildinfo
+
+# Tauri generates these from the capabilities on every build
+/src-tauri/gen/schemas
+
+# Local tooling and logs
+.claude/
+*.log
+*.local
+
+# Test results from this PC (they name software installed on it); scripts regenerate them
+scripts/*-results*.txt

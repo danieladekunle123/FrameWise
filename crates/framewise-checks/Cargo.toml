@@ -1,0 +1,38 @@
+[package]
+name = "framewise-checks"
+description = "FrameWise check definitions: system snapshot collection (Windows) and pure evaluation logic shared by every FrameWise process."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+wmi = "0.14"
+nvml-wrapper = "0.13"
+sysinfo = { version = "0.32", default-features = false, features = ["system", "disk"] }
+windows = { version = "0.58", features = [
+  "Wdk_Graphics_Direct3D",
+  "Win32_Devices_DeviceAndDriverInstallation",
+  "Win32_Foundation",
+  "Win32_Graphics_Direct3D",
+  "Win32_Graphics_Direct3D_Fxc",
+  "Win32_Graphics_Direct3D11",
+  "Win32_Graphics_Dxgi",
+  "Win32_Graphics_Dxgi_Common",
+  "Win32_Graphics_Gdi",
+  "Win32_System_Diagnostics_Debug",
+  "Win32_System_LibraryLoader",
+  "Win32_System_Performance",
+  "Win32_System_Power",
+  "Win32_System_Registry",
+  "Win32_System_Restore",
+  "Win32_System_ProcessStatus",
+  "Win32_System_Threading",
+  "Win32_System_SystemInformation",
+  "Win32_UI_Shell",
+  "Win32_UI_WindowsAndMessaging",
+] }

@@ -1,0 +1,511 @@
+{
+  "id": 1,
+  "started_at": 1793923200,
+  "duration_ms": 640,
+  "score": 43,
+  "app_version": "0.2.0",
+  "findings": [
+    {
+      "check_id": "ram_speed",
+      "title": "RAM running below its rated speed",
+      "status": "issue",
+      "impact": "high",
+      "action": "guide",
+      "summary": "Your RAM runs at 2133 MT/s but is rated for 3600 MT/s.",
+      "explanation": "Gaming RAM is sold with a rated speed (XMP on Intel boards, EXPO or DOCP on AMD), but motherboards ship with it switched off, so the RAM runs at a slower safe default. That costs CPU-bound FPS and especially 1% lows, often by 10–20%.",
+      "fix_changes": "Turning on the memory profile in BIOS makes the RAM run at the speed it was sold at. Nothing else changes.",
+      "detected": "2133 MT/s",
+      "expected": "3600 MT/s",
+      "details": [
+        "DIMM 1 · 16 GB · CMK32GX4M2D3600C18 · runs at 2133 MT/s (reports 2133 MT/s)",
+        "DIMM 1 · 16 GB · CMK32GX4M2D3600C18 · runs at 2133 MT/s (reports 2133 MT/s)"
+      ],
+      "guide": {
+        "steps": [
+          "Restart the PC and press the BIOS key as it starts (usually Delete or F2).",
+          "Find the memory profile setting. It's called XMP on most Intel boards and EXPO, DOCP or A-XMP on AMD boards, often on the main or 'Ai Tweaker' / 'OC' page.",
+          "Set it to Profile 1 (or Enabled), then save and exit (usually F10).",
+          "The first boot after this can take a minute while the board trains the memory. If the PC won't start, it resets itself after a few tries, or you can clear CMOS.",
+          "Back in Windows, press Recheck here to confirm the new speed.",
+          "If the setting is already on but the speed is still low, your CPU's memory controller may cap it. Check your CPU's supported memory speed."
+        ],
+        "settings_uri": null,
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": null,
+      "fix": null
+    },
+    {
+      "check_id": "refresh_rate",
+      "title": "Monitor running below its maximum refresh rate",
+      "status": "issue",
+      "impact": "high",
+      "action": "fix",
+      "summary": "Your monitor runs at 60 Hz but supports 165 Hz.",
+      "explanation": "A high-refresh monitor often comes out of the box at 60 Hz, and Windows doesn't always pick the highest rate. At 60 Hz you see at most 60 frames per second, however fast your PC is.",
+      "fix_changes": "Sets the display to the highest refresh rate it supports at its current resolution. Undo puts the previous rate back.",
+      "detected": "60 Hz",
+      "expected": "165 Hz",
+      "details": [
+        "Generic PnP Monitor (main): 2560×1440 at 60 Hz (supports up to 165 Hz at this resolution)"
+      ],
+      "guide": {
+        "steps": [
+          "Open Settings > System > Display > Advanced display (the button below opens it).",
+          "Pick the monitor at the top if you have more than one.",
+          "Under 'Choose a refresh rate', select the highest value.",
+          "If the rate you expect isn't listed, check the cable: many monitors need DisplayPort or an HDMI 2.0+ cable for high refresh rates."
+        ],
+        "settings_uri": "ms-settings:display-advanced",
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": 2,
+      "fix": {
+        "kind": "apply",
+        "label": "Set highest refresh rate",
+        "safe": false,
+        "needs_admin": false,
+        "needs_restart": false,
+        "confirm": null
+      }
+    },
+    {
+      "check_id": "ram_channels",
+      "title": "RAM running in single channel",
+      "status": "ok",
+      "impact": "high",
+      "action": "guide",
+      "summary": "2 sticks spread across channels: dual channel.",
+      "explanation": "CPUs read memory over two channels at once. With one stick, or two sticks in the same channel, memory bandwidth is halved, which can cost 10–30% FPS in CPU-heavy games and hurts integrated graphics even more.",
+      "fix_changes": "Nothing in software. Two matching sticks in the right slots, or a second matching stick, restores dual channel.",
+      "detected": "2 modules",
+      "expected": null,
+      "details": [
+        "DIMM 1 / P0 CHANNEL A · 16 GB · channel A",
+        "DIMM 1 / P0 CHANNEL B · 16 GB · channel B"
+      ],
+      "guide": {
+        "steps": [
+          "Shut down the PC and switch off the power supply.",
+          "Check your motherboard manual for the dual-channel slots. With two sticks on a four-slot board it's usually the second and fourth slots from the CPU (A2 and B2).",
+          "If you have one stick, add a second one with the same size and speed (ideally the same model).",
+          "Move the sticks into the recommended slots, power on and press Recheck.",
+          "On laptops, one slot may be soldered memory. Check the laptop's manual or a teardown before buying a stick."
+        ],
+        "settings_uri": null,
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": null,
+      "fix": null
+    },
+    {
+      "check_id": "gpu_driver",
+      "title": "GPU driver out of date",
+      "status": "ok",
+      "impact": "high",
+      "action": "guide",
+      "summary": "Your NVIDIA GeForce RTX 3070 driver is recent (62 days old).",
+      "explanation": "New GPU drivers include fixes and performance work for recent games. A driver more than six months old can miss them, and a PC with no GPU driver at all runs on Windows' basic display driver with no gaming acceleration.",
+      "fix_changes": "Installing the latest driver from your GPU maker. FrameWise creates a restore point first once fixes arrive; you can also make one yourself.",
+      "detected": "2026-09-05 (62 days old)",
+      "expected": "Under 180 days old",
+      "details": [
+        "NVIDIA GeForce RTX 3070 · driver 32.0.15.6094 · dated 2026-09-05"
+      ],
+      "guide": {
+        "steps": [
+          "Download the latest driver for your GPU from the maker's site (links below).",
+          "Run the installer. Choose a clean or factory-reset install if games stutter or crash after past updates.",
+          "Restart, then press Recheck.",
+          "FrameWise checks the driver's age only. It doesn't contact NVIDIA, AMD or Intel, so it can't see the exact latest version."
+        ],
+        "settings_uri": null,
+        "links": [
+          {
+            "label": "NVIDIA drivers",
+            "url": "https://www.nvidia.com/en-us/drivers/"
+          },
+          {
+            "label": "AMD drivers",
+            "url": "https://www.amd.com/en/support/download/drivers.html"
+          },
+          {
+            "label": "Intel drivers",
+            "url": "https://www.intel.com/content/www/us/en/support/detect.html"
+          }
+        ],
+        "choices": []
+      },
+      "one_click_phase": null,
+      "fix": null
+    },
+    {
+      "check_id": "thermal_throttling",
+      "title": "CPU or GPU thermal throttling",
+      "status": "unknown",
+      "impact": "high",
+      "action": "guide",
+      "summary": "Throttling only shows under load. Start the monitor (Monitor & benchmark) while you play: it watches temperatures and clocks and warns if the CPU or GPU throttles.",
+      "explanation": "When a CPU or GPU gets too hot it lowers its own clock speed to protect itself. In games that shows up as FPS that starts fine and then drops, or sudden stutters after a few minutes of play.",
+      "fix_changes": "Nothing in software. Cleaning dust, improving airflow or adjusting fan curves lets the chips hold their full speed.",
+      "detected": null,
+      "expected": null,
+      "details": [],
+      "guide": {
+        "steps": [
+          "Shut down and clean dust from the CPU cooler, GPU fans, case filters and power supply with compressed air.",
+          "Check that case fans move air front-to-back or bottom-to-top, and that every fan spins.",
+          "In BIOS, set a fan curve that ramps up above about 70 °C.",
+          "If the CPU is more than four or five years old, its thermal paste may have dried out."
+        ],
+        "settings_uri": null,
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": null,
+      "fix": null
+    },
+    {
+      "check_id": "game_on_hdd",
+      "title": "Games installed on a hard drive",
+      "status": "issue",
+      "impact": "medium",
+      "action": "guide",
+      "summary": "2 of your 4 games are on a hard drive.",
+      "explanation": "Modern games stream textures and levels while you play. From a spinning hard drive that causes long loads, pop-in and hitching; an SSD is many times faster for this.",
+      "fix_changes": "Moving the game to an SSD with the launcher's own move tool. Saves and settings come with it.",
+      "detected": "2 of 4 games on a hard drive",
+      "expected": "All games on an SSD",
+      "details": [
+        "Cyberpunk 2077 (Steam) · D:\\SteamLibrary\\steamapps\\common\\Cyberpunk 2077",
+        "Elden Ring (Steam) · D:\\SteamLibrary\\steamapps\\common\\ELDEN RING"
+      ],
+      "guide": {
+        "steps": [
+          "Steam: Settings > Storage, add a library folder on your SSD, then select the game and choose Move.",
+          "Epic Games: there's no move button, so uninstall the game and reinstall it to a folder on the SSD.",
+          "Xbox app: open the game's page, choose Manage > Files > Move.",
+          "Battle.net: close Battle.net, move the game's folder to the SSD, then use 'Locate the game' on the game's page.",
+          "Prioritise the games you play most, especially open-world games."
+        ],
+        "settings_uri": null,
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": null,
+      "fix": null
+    },
+    {
+      "check_id": "overlays",
+      "title": "Overlays and launchers running in the background",
+      "status": "issue",
+      "impact": "medium",
+      "action": "fix",
+      "summary": "4 overlays or launchers are running right now.",
+      "explanation": "Overlays hook into the game's rendering, and launchers, recorders and RGB apps wake up regularly in the background. A few are fine; several together add CPU work and can cause stutter.",
+      "fix_changes": "A game profile closes or suspends the apps you pick while a game runs and brings them back when it exits. Nothing is uninstalled.",
+      "detected": "4 running",
+      "expected": "Fewer than 3 while gaming",
+      "details": [
+        "Discord (overlay)",
+        "NVIDIA overlay",
+        "Epic Games Launcher",
+        "Corsair iCUE"
+      ],
+      "guide": {
+        "steps": [
+          "Quit launchers you don't need open (right-click their tray icon > Exit).",
+          "Turn off overlays you don't use: Discord (Settings > Game Overlay), NVIDIA app or GeForce Experience (in-game overlay), Steam (Settings > In Game).",
+          "Stop apps launching with Windows in Settings > Apps > Startup (see the Startup check).",
+          "From phase 4, game profiles do this automatically for each game and undo it on exit."
+        ],
+        "settings_uri": null,
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": 4,
+      "fix": null
+    },
+    {
+      "check_id": "startup_bloat",
+      "title": "Too many apps starting with Windows",
+      "status": "issue",
+      "impact": "medium",
+      "action": "fix",
+      "summary": "11 apps start with Windows.",
+      "explanation": "Every app that starts with Windows uses memory and wakes the CPU in the background, all the time, including while you game. Most updaters and helpers don't need to run until you open the app.",
+      "fix_changes": "Disables the startup entries you select, the same way Task Manager does. The apps still work when you open them, and Undo re-enables them.",
+      "detected": "11 enabled",
+      "expected": "8 or fewer",
+      "details": [
+        "Discord · Current user (registry)",
+        "Steam · Current user (registry)",
+        "EpicGamesLauncher · Current user (registry)",
+        "OneDrive · Current user (registry)",
+        "Spotify · Current user (registry)",
+        "iCUE · All users (registry)",
+        "SecurityHealth · All users (registry)",
+        "RtkAudUService · All users (registry)",
+        "Adobe Updater · All users, 32-bit (registry)",
+        "Battle.net · Current user (registry)",
+        "EADesktop · Current user (registry)"
+      ],
+      "guide": {
+        "steps": [
+          "Open Settings > Apps > Startup (the button below opens it), or Task Manager > Startup apps.",
+          "Turn off apps you don't need the moment Windows starts: updaters, launchers, cloud tools you rarely use, RGB tools you've already configured.",
+          "Keep security software, audio and touchpad drivers, and anything you rely on in the tray.",
+          "Restart, then press Recheck."
+        ],
+        "settings_uri": "ms-settings:startupapps",
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": 2,
+      "fix": {
+        "kind": "pick_startup",
+        "label": "Choose apps to disable",
+        "safe": false,
+        "needs_admin": false,
+        "needs_restart": false,
+        "confirm": null
+      }
+    },
+    {
+      "check_id": "power_plan",
+      "title": "Power plan limits performance",
+      "status": "ok",
+      "impact": "medium",
+      "action": "fix",
+      "summary": "Balanced plan is active.",
+      "explanation": "The Power saver plan, and Windows 11's 'Best power efficiency' mode, hold the CPU at lower clock speeds to save energy. On a desktop that costs FPS for very little saving. Balanced is the right default; High performance helps a little in some games.",
+      "fix_changes": "Switches to the Balanced plan (or a game profile switches to High performance only while a game runs). Undo restores the previous plan.",
+      "detected": "Balanced",
+      "expected": "Balanced or High performance",
+      "details": [],
+      "guide": {
+        "steps": [
+          "Open Settings > System > Power (the button below opens it).",
+          "Set Power mode to Balanced or Best performance.",
+          "On Windows 10, open Control Panel > Power Options and choose Balanced or High performance."
+        ],
+        "settings_uri": "ms-settings:powersleep",
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": 2,
+      "fix": null
+    },
+    {
+      "check_id": "game_mode",
+      "title": "Game Mode is off",
+      "status": "ok",
+      "impact": "low",
+      "action": "fix",
+      "summary": "Game Mode is on.",
+      "explanation": "Game Mode tells Windows to hold back Windows Update installs and driver updates and to give the game priority for CPU time while it runs. It's on by default and rarely hurts.",
+      "fix_changes": "Turns Game Mode on (one Windows setting). Undo turns it back off.",
+      "detected": "On",
+      "expected": "On",
+      "details": [],
+      "guide": {
+        "steps": [
+          "Open Settings > Gaming > Game Mode (the button below opens it).",
+          "Turn Game Mode on."
+        ],
+        "settings_uri": "ms-settings:gaming-gamemode",
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": 2,
+      "fix": null
+    },
+    {
+      "check_id": "hags",
+      "title": "Hardware-accelerated GPU scheduling is off",
+      "status": "issue",
+      "impact": "low",
+      "action": "fix",
+      "summary": "Your GPU supports hardware-accelerated GPU scheduling, but it's off.",
+      "explanation": "This lets the GPU manage its own work queue instead of the CPU, which slightly lowers latency and CPU load. NVIDIA DLSS Frame Generation and AMD's equivalent need it.",
+      "fix_changes": "Turns the setting on. It takes effect after a restart. Undo turns it back off.",
+      "detected": "Off",
+      "expected": "On",
+      "details": [],
+      "guide": {
+        "steps": [
+          "Open Settings > System > Display > Graphics (the button below opens it).",
+          "Select 'Change default graphics settings' (on Windows 11, it may be under 'Advanced graphics settings').",
+          "Turn on 'Hardware-accelerated GPU scheduling' and restart.",
+          "If the switch isn't there, your GPU or driver doesn't support it. Updating the GPU driver may add it."
+        ],
+        "settings_uri": "ms-settings:display-advancedgraphics",
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": 2,
+      "fix": {
+        "kind": "apply",
+        "label": "Turn on",
+        "safe": false,
+        "needs_admin": true,
+        "needs_restart": true,
+        "confirm": null
+      }
+    },
+    {
+      "check_id": "windowed_optimizations",
+      "title": "Optimisations for windowed games are off",
+      "status": "ok",
+      "impact": "low",
+      "action": "fix",
+      "summary": "Optimisations for windowed games are on.",
+      "explanation": "Many games run in borderless windowed mode. On Windows 11 this setting lets those games present frames like fullscreen games do, lowering latency and enabling Auto HDR and variable refresh in older DirectX games.",
+      "fix_changes": "Turns the setting on in Windows' graphics preferences. Undo turns it back off.",
+      "detected": "On (Windows default)",
+      "expected": "On",
+      "details": [],
+      "guide": {
+        "steps": [
+          "Open Settings > System > Display > Graphics (the button below opens it).",
+          "Select 'Change default graphics settings' or 'Advanced graphics settings'.",
+          "Turn on 'Optimizations for windowed games'."
+        ],
+        "settings_uri": "ms-settings:display-advancedgraphics",
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": 2,
+      "fix": null
+    },
+    {
+      "check_id": "memory_integrity",
+      "title": "Memory Integrity is on",
+      "status": "issue",
+      "impact": "low_medium",
+      "action": "choose",
+      "summary": "Memory Integrity is on. That's the secure choice; see the trade-off below.",
+      "explanation": "Memory Integrity (also called HVCI, part of Core isolation) uses virtualisation to stop malicious drivers from tampering with Windows. It protects you, and on some CPUs, mostly older ones, it costs a few percent of FPS. This is your call; FrameWise never changes it automatically and doesn't count it against your score.",
+      "fix_changes": "If you choose to turn it off: one Windows Security setting, which needs a restart. You can turn it back on at any time.",
+      "detected": "On",
+      "expected": null,
+      "details": [],
+      "guide": {
+        "steps": [
+          "Open Windows Security > Device security > Core isolation details (the button below opens it).",
+          "Switch Memory integrity on or off, then restart.",
+          "If you're unsure, record benchmarks with it on and off (Monitor & benchmark) and keep it on unless the difference is clear."
+        ],
+        "settings_uri": "windowsdefender://coreisolation",
+        "links": [],
+        "choices": [
+          {
+            "label": "Keep it on (recommended for most people)",
+            "gains": "Strong protection against malicious and vulnerable drivers, which some cheats and malware use.",
+            "costs": "Typically 0–5% FPS, more on CPUs older than about 2018 (Intel 7th gen, AMD Zen 1)."
+          },
+          {
+            "label": "Turn it off",
+            "gains": "Recovers that small FPS cost, mostly on older CPUs.",
+            "costs": "Removes a layer of protection. Some anti-cheat systems and work or school policies require it on."
+          }
+        ]
+      },
+      "one_click_phase": 2,
+      "fix": {
+        "kind": "choose",
+        "label": "Turn it off",
+        "safe": false,
+        "needs_admin": true,
+        "needs_restart": true,
+        "confirm": "Memory Integrity protects Windows from malicious and vulnerable drivers. Turning it off can recover a few percent of FPS, mostly on older CPUs, but removes that protection. Some anti-cheat systems and work or school PCs require it. It takes effect after a restart, and you can turn it back on from History or Windows Security."
+      }
+    },
+    {
+      "check_id": "variable_refresh",
+      "title": "Variable refresh (G-Sync / FreeSync) may be off",
+      "status": "unknown",
+      "impact": "medium",
+      "action": "guide",
+      "summary": "FrameWise can't read GPU control panel settings yet. If you have a high-refresh monitor, check that it's on.",
+      "explanation": "Variable refresh makes the monitor wait for each frame instead of the other way round. It removes tearing and the stutter of normal V-Sync when FPS drops below the refresh rate, which makes uneven frame rates feel much smoother.",
+      "fix_changes": "Turning it on in the monitor's menu and your GPU control panel. Nothing in Windows changes.",
+      "detected": null,
+      "expected": null,
+      "details": [],
+      "guide": {
+        "steps": [
+          "In the monitor's own on-screen menu, turn on FreeSync, Adaptive-Sync or VRR (the name varies).",
+          "NVIDIA: open the NVIDIA Control Panel > Display > Set up G-SYNC, tick 'Enable G-SYNC, G-SYNC Compatible' and apply.",
+          "AMD: open AMD Software > Gaming > Display and turn on AMD FreeSync.",
+          "Intel Arc: open Intel Graphics Software > Display and turn on Adaptive Sync.",
+          "Use DisplayPort where possible; many monitors only support variable refresh over it."
+        ],
+        "settings_uri": null,
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": null,
+      "fix": null
+    },
+    {
+      "check_id": "system_drive_space",
+      "title": "System drive nearly full",
+      "status": "ok",
+      "impact": "low",
+      "action": "fix",
+      "summary": "31% of drive C: is free.",
+      "explanation": "Windows needs free space on its drive for the page file, updates and shader caches. Under about 10% free, updates fail, games can't cache shaders and SSDs slow down.",
+      "fix_changes": "Cleanup removes temp files, crash dumps, old driver packages and update leftovers, and shows their size first. Your own files go to the Recycle Bin.",
+      "detected": "291 GB free of 932 GB (31%)",
+      "expected": "At least 10% free",
+      "details": [],
+      "guide": {
+        "steps": [
+          "Open Settings > System > Storage (the button below opens it) and select 'Temporary files' to remove what Windows lists.",
+          "Turn on Storage Sense to clear temp files automatically.",
+          "Uninstall games you no longer play, or move them to another drive with the launcher's move tool.",
+          "Empty the Recycle Bin."
+        ],
+        "settings_uri": "ms-settings:storagesense",
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": 2,
+      "fix": null
+    },
+    {
+      "check_id": "network_latency",
+      "title": "High ping or unstable connection",
+      "status": "ok",
+      "impact": "medium",
+      "action": "guide",
+      "summary": "Connection is healthy: 14 ms ping, 1 ms jitter.",
+      "explanation": "In online games, high ping delays everything you do, and jitter (ping that jumps around) causes rubber-banding. Wi-Fi and a busy home network are the usual causes, not the PC.",
+      "fix_changes": "Nothing on the PC. A wired connection or router settings fix most cases.",
+      "detected": "14 ms ping, 1 ms jitter",
+      "expected": "Under 60 ms ping, under 15 ms jitter",
+      "details": [
+        "8 samples to 1.1.1.1 · 0 failed"
+      ],
+      "guide": {
+        "steps": [
+          "Use an ethernet cable if you can. It's the single biggest improvement for jitter.",
+          "On Wi-Fi, use the 5 GHz or 6 GHz band and sit closer to the router.",
+          "If ping spikes when someone else streams or downloads, turn on your router's QoS or SQM setting (sometimes called 'bufferbloat' control).",
+          "Pause cloud backups, torrent clients and game downloads while playing.",
+          "This test measures connection time to a public DNS server with no data sent. A full under-load (bufferbloat) test is planned."
+        ],
+        "settings_uri": "ms-settings:network-status",
+        "links": [],
+        "choices": []
+      },
+      "one_click_phase": null,
+      "fix": null
+    }
+  ],
+  "collection_errors": []
+}

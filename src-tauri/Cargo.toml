@@ -1,0 +1,51 @@
+[package]
+name = "framewise"
+description = "FrameWise: the honest Windows gaming optimiser"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+default-run = "framewise"
+
+[lib]
+name = "framewise_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+framewise-checks = { path = "../crates/framewise-checks" }
+tauri = { version = "2", features = [] }
+tauri-plugin-global-shortcut = "2"
+serde.workspace = true
+serde_json.workspace = true
+rusqlite = { version = "0.32", features = ["bundled"] }
+sysinfo = { version = "0.32", default-features = false, features = ["system"] }
+sha2 = "0.10"
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+wmi = "0.14"
+# Same versions Tauri uses, for the WebView2 memory target (see src/memory.rs).
+webview2-com = "0.39"
+windows-core = "0.62"
+windows = { version = "0.58", features = [
+  "Win32_Foundation",
+  "Win32_NetworkManagement_NetManagement",
+  "Win32_Security",
+  "Win32_Security_Authorization",
+  "Win32_Storage_FileSystem",
+  "Win32_System_Com",
+  "Win32_System_Diagnostics_ToolHelp",
+  "Win32_System_IO",
+  "Win32_System_LibraryLoader",
+  "Win32_System_RemoteDesktop",
+  "Win32_System_JobObjects",
+  "Win32_System_Pipes",
+  "Win32_System_SystemInformation",
+  "Win32_System_Threading",
+  "Win32_System_Time",
+  "Win32_UI_Accessibility",
+  "Win32_UI_Shell",
+  "Win32_UI_WindowsAndMessaging",
+] }

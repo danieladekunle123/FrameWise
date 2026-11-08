@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "The main window and the monitor overlay: core defaults plus matching the title bar to the theme.",
+  "windows": ["main", "overlay"],
+  "permissions": ["core:default", "core:window:allow-set-theme"]
+}

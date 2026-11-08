@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 256">
+  <title>FrameWise lockup (exploration: live text)</title>
+  <g>
+  <path d="M60 36H200V68H72V112H148V144H72V220H40V56A20 20 0 0 1 60 36Z"/>
+  <path d="M136 220V188H184V136H216V200A20 20 0 0 1 196 220Z"/>
+  </g>
+  <text x="266" y="166" font-family="Segoe UI, Inter, Arial, sans-serif" font-weight="600" font-size="112" letter-spacing="-2">FrameWise</text>
+</svg>

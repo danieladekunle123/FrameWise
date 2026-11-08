@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <title>Framewise — Check Frame (strokes, exploration)</title>
+  <g fill="none" stroke="#000" stroke-width="28">
+    <path d="M150 50H90A40 40 0 0 0 50 90V166A40 40 0 0 0 90 206H166A40 40 0 0 0 206 166V136"/>
+    <path d="M88 122L120 154L214 60" stroke-linejoin="miter"/>
+  </g>
+</svg>

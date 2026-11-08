@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="810" viewBox="0 0 1600 810"><defs><filter id="grey"><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="1600" height="810" fill="#f7f7f4"/><text x="60" y="78" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="40" font-weight="700" fill="#161616">Logo concepts</text><text x="60" y="116" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" fill="#6b6b6b">Concepts for review — pick a direction (or tell me what you like in each).</text><rect x="60" y="150" width="474.667" height="600" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Bolt F</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="516" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Bolt F</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+</svg>
+</g><text x="122" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="180" y="548" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Bolt F</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+</svg>
+</g><text x="196" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="238" y="564" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Bolt F</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+</svg>
+</g><text x="246" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="90.0" y="636" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">A · D</text><text x="90.0" y="670" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">x</text><rect x="562.667" y="150" width="474.667" height="600" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Split F</title>
+  <path d="M65.1 36L229.1 36L221.5 72L93.5 72L62 220L26 220Z"/>
+  <path d="M101.4 110L185.4 110L177.7 146L93.7 146Z"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="516" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Split F</title>
+  <path d="M65.1 36L229.1 36L221.5 72L93.5 72L62 220L26 220Z"/>
+  <path d="M101.4 110L185.4 110L177.7 146L93.7 146Z"/>
+</svg>
+</g><text x="624.667" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="682.667" y="548" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Split F</title>
+  <path d="M65.1 36L229.1 36L221.5 72L93.5 72L62 220L26 220Z"/>
+  <path d="M101.4 110L185.4 110L177.7 146L93.7 146Z"/>
+</svg>
+</g><text x="698.667" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="740.667" y="564" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Split F</title>
+  <path d="M65.1 36L229.1 36L221.5 72L93.5 72L62 220L26 220Z"/>
+  <path d="M101.4 110L185.4 110L177.7 146L93.7 146Z"/>
+</svg>
+</g><text x="748.667" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="592.6666666666667" y="636" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">B · E</text><text x="592.6666666666667" y="670" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">x</text><rect x="1065.33" y="150" width="474.667" height="600" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Owl Visor</title>
+  <path fill-rule="evenodd" d="M40 40L100 80L156 80L216 40L216 164L128 224L40 164ZM72 104H108A10 10 0 0 1 118 114V142A10 10 0 0 1 108 152H72A10 10 0 0 1 62 142V114A10 10 0 0 1 72 104ZM148 104H184A10 10 0 0 1 194 114V142A10 10 0 0 1 184 152H148A10 10 0 0 1 138 142V114A10 10 0 0 1 148 104ZM114 164L142 164L128 186Z"/>
+  <path fill-rule="evenodd" d="M96 114H106A4 4 0 0 1 110 118V128A4 4 0 0 1 106 132H96A4 4 0 0 1 92 128V118A4 4 0 0 1 96 114Z"/>
+  <path fill-rule="evenodd" d="M172 114H182A4 4 0 0 1 186 118V128A4 4 0 0 1 182 132H172A4 4 0 0 1 168 128V118A4 4 0 0 1 172 114Z"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="516" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Owl Visor</title>
+  <path fill-rule="evenodd" d="M40 40L100 80L156 80L216 40L216 164L128 224L40 164ZM72 104H108A10 10 0 0 1 118 114V142A10 10 0 0 1 108 152H72A10 10 0 0 1 62 142V114A10 10 0 0 1 72 104ZM148 104H184A10 10 0 0 1 194 114V142A10 10 0 0 1 184 152H148A10 10 0 0 1 138 142V114A10 10 0 0 1 148 104ZM114 164L142 164L128 186Z"/>
+  <path fill-rule="evenodd" d="M96 114H106A4 4 0 0 1 110 118V128A4 4 0 0 1 106 132H96A4 4 0 0 1 92 128V118A4 4 0 0 1 96 114Z"/>
+  <path fill-rule="evenodd" d="M172 114H182A4 4 0 0 1 186 118V128A4 4 0 0 1 182 132H172A4 4 0 0 1 168 128V118A4 4 0 0 1 172 114Z"/>
+</svg>
+</g><text x="1127.33" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1185.33" y="548" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Owl Visor</title>
+  <path fill-rule="evenodd" d="M40 40L100 80L156 80L216 40L216 164L128 224L40 164ZM72 104H108A10 10 0 0 1 118 114V142A10 10 0 0 1 108 152H72A10 10 0 0 1 62 142V114A10 10 0 0 1 72 104ZM148 104H184A10 10 0 0 1 194 114V142A10 10 0 0 1 184 152H148A10 10 0 0 1 138 142V114A10 10 0 0 1 148 104ZM114 164L142 164L128 186Z"/>
+  <path fill-rule="evenodd" d="M96 114H106A4 4 0 0 1 110 118V128A4 4 0 0 1 106 132H96A4 4 0 0 1 92 128V118A4 4 0 0 1 96 114Z"/>
+  <path fill-rule="evenodd" d="M172 114H182A4 4 0 0 1 186 118V128A4 4 0 0 1 182 132H172A4 4 0 0 1 168 128V118A4 4 0 0 1 172 114Z"/>
+</svg>
+</g><text x="1201.33" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1243.33" y="564" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Owl Visor</title>
+  <path fill-rule="evenodd" d="M40 40L100 80L156 80L216 40L216 164L128 224L40 164ZM72 104H108A10 10 0 0 1 118 114V142A10 10 0 0 1 108 152H72A10 10 0 0 1 62 142V114A10 10 0 0 1 72 104ZM148 104H184A10 10 0 0 1 194 114V142A10 10 0 0 1 184 152H148A10 10 0 0 1 138 142V114A10 10 0 0 1 148 104ZM114 164L142 164L128 186Z"/>
+  <path fill-rule="evenodd" d="M96 114H106A4 4 0 0 1 110 118V128A4 4 0 0 1 106 132H96A4 4 0 0 1 92 128V118A4 4 0 0 1 96 114Z"/>
+  <path fill-rule="evenodd" d="M172 114H182A4 4 0 0 1 186 118V128A4 4 0 0 1 182 132H172A4 4 0 0 1 168 128V118A4 4 0 0 1 172 114Z"/>
+</svg>
+</g><text x="1251.33" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="1095.3333333333335" y="636" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">C · F</text><text x="1095.3333333333335" y="670" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">x</text></svg>

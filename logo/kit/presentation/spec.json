@@ -1,0 +1,41 @@
+{
+  "brand": "FrameWise",
+  "tagline": "Real FPS gains. Proven, reversible, near-zero footprint.",
+  "brief": "A free, lightweight Windows optimiser for PC gamers. It fixes only what measurably helps (RAM speed, refresh rate, background bloat) and proves every gain with before/after benchmarks. The mark should feel sharp, precise and game-ready, and avoid optimiser clichés like rockets, speedometers and flames.",
+  "adjectives": ["precise", "fast", "honest", "game-ready"],
+  "criteria": "Success: reads as gaming and performance at a glance, distinct from snake-oil optimisers, works at 16 px in the tray and taskbar, works in one colour.",
+  "mockups": ["app-icon", "website", "favicon-tab", "social", "sticker", "tshirt"],
+  "nav": ["Features", "Myths", "Download"],
+  "brand_color": "#6D4AFF",
+  "tile_color": "#0E0F14",
+  "greyscale": false,
+  "final": true,
+  "designer": "FrameWise",
+  "round": 2,
+  "symbol_on_tile": "../masters/framewise-symbol-on-dark.svg",
+  "symbol_on_dark": "../masters/framewise-symbol-on-dark.svg",
+  "lockup_on_dark": "../masters/framewise-horizontal-on-dark.svg",
+  "lockup_on_tile": "../masters/framewise-horizontal-on-dark.svg",
+  "stacked_on_tile": "../masters/framewise-stacked-on-dark.svg",
+  "stacked_on_dark": "../masters/framewise-stacked-on-dark.svg",
+  "concepts": [
+    {
+      "name": "Lock-On F",
+      "symbol": "../masters/framewise-symbol.svg",
+      "lockup": "../masters/framewise-horizontal.svg",
+      "idea": "Frame corners form a targeting reticle: the left corner is the F, and its middle arm aims straight at the target.",
+      "rationale": [
+        "Reticle = gaming and precision: FrameWise locks onto the issues that really cost FPS",
+        "Frame corners = the 'Frame' in the name; violet frame and cyan target follow the app's own colour tokens",
+        "Custom squared wordmark shares the mark's stroke, corners and cyan dot (on the i)",
+        "Separate small-size cut keeps the F and target readable at 16 px in the tray"
+      ]
+    }
+  ],
+  "recommendation": "Lock-On F: ownable in a category full of rockets and speedometers, strong at icon sizes, and built from the same parts as the app UI.",
+  "next_steps": [
+    "Drop the icon set into the Tauri project (npx tauri icon export/app-icon-large/framewise-app-icon-app-icon-1024.png)",
+    "Run a trademark search on the name and mark before launch",
+    "Use the symbol as the tray icon and the reticle corners as UI accents (scan, focus states)"
+  ]
+}

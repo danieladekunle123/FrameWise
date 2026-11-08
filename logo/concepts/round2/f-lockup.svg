@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 256">
+  <title>FrameWise lockup (exploration: live text)</title>
+  <path fill-rule="evenodd" d="M36 40L128 100L220 40L220 160L128 226L36 160ZM60 77.7L116 114.2L116 156L60 156ZM140 114.2L196 77.7L196 156L140 156ZM114 168L142 168L128 190Z"/>
+  <path fill-rule="evenodd" d="M97 122H107A3 3 0 0 1 110 125V135A3 3 0 0 1 107 138H97A3 3 0 0 1 94 135V125A3 3 0 0 1 97 122Z"/>
+  <path fill-rule="evenodd" d="M177 122H187A3 3 0 0 1 190 125V135A3 3 0 0 1 187 138H177A3 3 0 0 1 174 135V125A3 3 0 0 1 177 122Z"/>
+  <text x="272" y="170" font-family="Bahnschrift, 'Segoe UI', Arial, sans-serif" font-weight="700" font-size="124" letter-spacing="0">FrameWise</text>
+</svg>

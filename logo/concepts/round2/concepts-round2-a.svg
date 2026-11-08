@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="984" viewBox="0 0 1600 984"><defs><filter id="grey"><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="1600" height="984" fill="#f7f7f4"/><text x="60" y="78" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="40" font-weight="700" fill="#161616">Logo concepts</text><text x="60" y="116" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" fill="#6b6b6b">Concepts for review — pick a direction (or tell me what you like in each).</text><rect x="60" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#161616" stroke-width="2"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Bolt F</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 256" x="90" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise lockup (exploration: live text)</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+  <text x="272" y="170" transform="translate(36 0) skewX(-12)" font-family="Bahnschrift, 'Segoe UI', Arial, sans-serif" font-weight="700" font-size="124" letter-spacing="0">FrameWise</text>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Bolt F</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+</svg>
+</g><text x="122" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="180" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Bolt F</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+</svg>
+</g><text x="196" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="238" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Bolt F</title>
+  <path d="M76 36L220 36L210 72L113 72L105 108L200 108L191 144L122 144L56 230L78 152L42 152Z"/>
+</svg>
+</g><text x="246" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="90.0" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">A · Bolt F</text><text x="90.0" y="808" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#161616" letter-spacing="1.5">RECOMMENDED</text><text x="90.0" y="842" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">The F&#x27;s stem is a lightning bolt: instant</text><text x="90.0" y="868" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">speed, still a letter</text><rect x="562.667" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Sliced F</title>
+  <path d="M67.1 36L235.1 36L227.5 72L95.5 72L90.4 96L54.4 96Z"/>
+  <path d="M51.8 108L187.8 108L180.2 144L44.2 144Z"/>
+  <path d="M41.6 156L77.6 156L64 220L28 220Z"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 256" x="592.667" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise lockup (exploration: live text)</title>
+  <path d="M67.1 36L235.1 36L227.5 72L95.5 72L90.4 96L54.4 96Z"/>
+  <path d="M51.8 108L187.8 108L180.2 144L44.2 144Z"/>
+  <path d="M41.6 156L77.6 156L64 220L28 220Z"/>
+  <text x="272" y="170" transform="translate(36 0) skewX(-12)" font-family="Bahnschrift, 'Segoe UI', Arial, sans-serif" font-weight="700" font-size="124" letter-spacing="0">FrameWise</text>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Sliced F</title>
+  <path d="M67.1 36L235.1 36L227.5 72L95.5 72L90.4 96L54.4 96Z"/>
+  <path d="M51.8 108L187.8 108L180.2 144L44.2 144Z"/>
+  <path d="M41.6 156L77.6 156L64 220L28 220Z"/>
+</svg>
+</g><text x="624.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="682.667" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Sliced F</title>
+  <path d="M67.1 36L235.1 36L227.5 72L95.5 72L90.4 96L54.4 96Z"/>
+  <path d="M51.8 108L187.8 108L180.2 144L44.2 144Z"/>
+  <path d="M41.6 156L77.6 156L64 220L28 220Z"/>
+</svg>
+</g><text x="698.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="740.667" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Sliced F</title>
+  <path d="M67.1 36L235.1 36L227.5 72L95.5 72L90.4 96L54.4 96Z"/>
+  <path d="M51.8 108L187.8 108L180.2 144L44.2 144Z"/>
+  <path d="M41.6 156L77.6 156L64 220L28 220Z"/>
+</svg>
+</g><text x="748.667" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="592.6666666666667" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">B · Sliced F</text><text x="592.6666666666667" y="814" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">An italic F cut into three frames, like a</text><text x="592.6666666666667" y="840" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">racing stripe moving at full speed</text><rect x="1065.33" y="150" width="474.667" height="774" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Wise Owl</title>
+  <path fill-rule="evenodd" d="M36 40L128 100L220 40L220 160L128 226L36 160ZM60 77.7L116 114.2L116 156L60 156ZM140 114.2L196 77.7L196 156L140 156ZM114 168L142 168L128 190Z"/>
+  <path fill-rule="evenodd" d="M97 122H107A3 3 0 0 1 110 125V135A3 3 0 0 1 107 138H97A3 3 0 0 1 94 135V125A3 3 0 0 1 97 122Z"/>
+  <path fill-rule="evenodd" d="M177 122H187A3 3 0 0 1 190 125V135A3 3 0 0 1 187 138H177A3 3 0 0 1 174 135V125A3 3 0 0 1 177 122Z"/>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 256" x="1095.33" y="514" width="414.667" height="120" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise lockup (exploration: live text)</title>
+  <path fill-rule="evenodd" d="M36 40L128 100L220 40L220 160L128 226L36 160ZM60 77.7L116 114.2L116 156L60 156ZM140 114.2L196 77.7L196 156L140 156ZM114 168L142 168L128 190Z"/>
+  <path fill-rule="evenodd" d="M97 122H107A3 3 0 0 1 110 125V135A3 3 0 0 1 107 138H97A3 3 0 0 1 94 135V125A3 3 0 0 1 97 122Z"/>
+  <path fill-rule="evenodd" d="M177 122H187A3 3 0 0 1 190 125V135A3 3 0 0 1 187 138H177A3 3 0 0 1 174 135V125A3 3 0 0 1 177 122Z"/>
+  <text x="272" y="170" font-family="Bahnschrift, 'Segoe UI', Arial, sans-serif" font-weight="700" font-size="124" letter-spacing="0">FrameWise</text>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="660" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Wise Owl</title>
+  <path fill-rule="evenodd" d="M36 40L128 100L220 40L220 160L128 226L36 160ZM60 77.7L116 114.2L116 156L60 156ZM140 114.2L196 77.7L196 156L140 156ZM114 168L142 168L128 190Z"/>
+  <path fill-rule="evenodd" d="M97 122H107A3 3 0 0 1 110 125V135A3 3 0 0 1 107 138H97A3 3 0 0 1 94 135V125A3 3 0 0 1 97 122Z"/>
+  <path fill-rule="evenodd" d="M177 122H187A3 3 0 0 1 190 125V135A3 3 0 0 1 187 138H177A3 3 0 0 1 174 135V125A3 3 0 0 1 177 122Z"/>
+</svg>
+</g><text x="1127.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1185.33" y="692" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Wise Owl</title>
+  <path fill-rule="evenodd" d="M36 40L128 100L220 40L220 160L128 226L36 160ZM60 77.7L116 114.2L116 156L60 156ZM140 114.2L196 77.7L196 156L140 156ZM114 168L142 168L128 190Z"/>
+  <path fill-rule="evenodd" d="M97 122H107A3 3 0 0 1 110 125V135A3 3 0 0 1 107 138H97A3 3 0 0 1 94 135V125A3 3 0 0 1 97 122Z"/>
+  <path fill-rule="evenodd" d="M177 122H187A3 3 0 0 1 190 125V135A3 3 0 0 1 187 138H177A3 3 0 0 1 174 135V125A3 3 0 0 1 177 122Z"/>
+</svg>
+</g><text x="1201.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1243.33" y="708" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>FrameWise — Wise Owl</title>
+  <path fill-rule="evenodd" d="M36 40L128 100L220 40L220 160L128 226L36 160ZM60 77.7L116 114.2L116 156L60 156ZM140 114.2L196 77.7L196 156L140 156ZM114 168L142 168L128 190Z"/>
+  <path fill-rule="evenodd" d="M97 122H107A3 3 0 0 1 110 125V135A3 3 0 0 1 107 138H97A3 3 0 0 1 94 135V125A3 3 0 0 1 97 122Z"/>
+  <path fill-rule="evenodd" d="M177 122H187A3 3 0 0 1 190 125V135A3 3 0 0 1 187 138H177A3 3 0 0 1 174 135V125A3 3 0 0 1 177 122Z"/>
+</svg>
+</g><text x="1251.33" y="744" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="1095.3333333333335" y="780" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">C · Wise Owl</text><text x="1095.3333333333335" y="814" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">A horned owl with screen-frame eyes and a</text><text x="1095.3333333333335" y="840" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">W-shaped brow: wise, focused, game-face on</text></svg>
