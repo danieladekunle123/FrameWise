@@ -3,7 +3,8 @@
 //
 // What runs: first run and scan; a safe fix applied, shown in History and undone (it changes one
 // per-user Windows setting and puts it back; skipped if this PC needs no safe fix); a benchmark of
-// the test scene (skipped unless frame capture works without a UAC prompt, as on CI runners).
+// the test scene (skipped unless frame capture works without a UAC prompt, i.e. run as admin, and
+// the PC has a real graphics adapter; GitHub's runners are admin but have none).
 import { chromium, expect, test, type Browser, type Page } from "@playwright/test";
 import { execFileSync, spawn, type ChildProcess } from "node:child_process";
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
@@ -84,7 +85,12 @@ test.afterAll(async () => {
   await browser?.close().catch(() => {});
   app?.kill();
   await sleep(1500);
-  rmSync(dataDir, { recursive: true, force: true });
+  // WebView2's helper processes can hold a file or two for a moment after the app exits.
+  try {
+    rmSync(dataDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 500 });
+  } catch (e) {
+    console.warn(`Couldn't remove ${dataDir}: ${e}`);
+  }
 });
 
 test("first run: welcome screen, then a scan with a health score", async () => {
@@ -123,11 +129,16 @@ test("a benchmark records the test scene", async () => {
   const status = await invoke<{ direct_ok: boolean }>("monitor_status");
   test.skip(!status.direct_ok, "Frame capture needs admin rights or the Performance Log Users group here.");
   test.skip(!existsSync(SCENE), `${SCENE} not built`);
+  // PresentMon reads frames from the graphics driver's events; virtual machines with only a basic
+  // or virtual display adapter (GitHub's runners) don't produce them for any app.
+  const adapters = execFileSync("powershell", ["-NoProfile", "-Command", "(Get-CimInstance Win32_VideoController).Name -join '; '"], { encoding: "utf8" }).trim();
+  const realGpu = adapters.split("; ").some((n) => n && !/Basic Display|Basic Render|Hyper-V|Remote Display|VirtualBox|VMware|Parsec|Virtual Display/i.test(n));
+  test.skip(!realGpu, `No real graphics adapter here (${adapters || "none"}), so there are no frames to capture.`);
   const scene = spawn(SCENE, ["90", "2000"], { stdio: "ignore" });
   try {
     await page.getByRole("button", { name: /Monitor & benchmark/ }).first().click();
     await page.getByRole("button", { name: "Start monitor" }).click();
-    await expect(page.getByText(/Measuring test_scene\.exe|test_scene\.exe/).first()).toBeVisible({ timeout: 30_000 });
+    await expect(page.getByText(/Measuring test_scene\.exe|test_scene\.exe/).first(), `the test scene ${scene.exitCode === null ? "is running" : `exited with code ${scene.exitCode}`}; adapters: ${adapters}`).toBeVisible({ timeout: 30_000 });
     const form = page.locator(".bench-form");
     await form.locator("select").nth(0).selectOption("30");
     await form.locator("select").nth(1).selectOption("0");
