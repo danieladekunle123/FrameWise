@@ -66,6 +66,9 @@ jobs:
             reg add "$root\Software\Policies\Microsoft\Edge\WebView2\AdditionalBrowserArguments" /v framewise.exe /t REG_SZ /d "--remote-debugging-port=9555" /f | Out-Null
           }
           "Debug port policy set for framewise.exe."
+          # Give the "safe fix applies and undoes" test something to fix: Game Mode off.
+          New-Item 'HKCU:\Software\Microsoft\GameBar' -Force | Out-Null
+          Set-ItemProperty 'HKCU:\Software\Microsoft\GameBar' -Name AutoGameModeEnabled -Value 0 -Type DWord
 
       - name: End-to-end tests (Playwright, real app)
         run: npm run e2e
