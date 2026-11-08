@@ -60,6 +60,12 @@ jobs:
             $v = $keys | ForEach-Object { (Get-ItemProperty $_ -ErrorAction SilentlyContinue).pv } | Where-Object { $_ } | Select-Object -First 1
             "WebView2 runtime now: $v"
           }
+          # The runner ignores WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS, so give the end-to-end tests
+          # their debug port through WebView2's per-app policy instead (CI machines only).
+          foreach ($root in 'HKCU', 'HKLM') {
+            reg add "$root\Software\Policies\Microsoft\Edge\WebView2\AdditionalBrowserArguments" /v framewise.exe /t REG_SZ /d "--remote-debugging-port=9555" /f | Out-Null
+          }
+          "Debug port policy set for framewise.exe."
 
       - name: End-to-end tests (Playwright, real app)
         run: npm run e2e
