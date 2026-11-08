@@ -15,7 +15,7 @@
   <img alt="Windows 10 and 11" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0891B2?style=flat-square">
   <img alt="Tauri 2, Rust and React" src="https://img.shields.io/badge/Tauri%202-Rust%20%C2%B7%20React-14151A?style=flat-square">
   <img alt="Interface about 90 MB, watcher 2 MB" src="https://img.shields.io/badge/footprint-UI%20~90%20MB%20%C2%B7%20watcher%202%20MB-16A34A?style=flat-square">
-  <img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-14151A?style=flat-square">
+  <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-14151A?style=flat-square"></a>
 </p>
 
 <p align="center">
@@ -314,4 +314,5 @@ Cyan is the only cyan in the logo, and in the app it always means live data.
 - [Tauri](https://tauri.app), [nvml-wrapper](https://github.com/Cldfire/nvml-wrapper),
   [rusqlite](https://github.com/rusqlite/rusqlite) and [lucide](https://lucide.dev) icons.
 
-FrameWise is released under the MIT licence, as declared in `Cargo.toml`.
+FrameWise is released under the [MIT licence](LICENSE). Bundled third-party software keeps its own
+licence (PresentMon: `vendor/presentmon/LICENSE.txt`).
