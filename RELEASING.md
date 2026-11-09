@@ -47,8 +47,8 @@ files, and on uninstall stop it and remove its start-with-Windows entry
 2. Commit, then tag and push:
 
    ```bash
-   git tag v0.4.0
-   git push origin main v0.4.0
+   git tag v0.5.0
+   git push origin main v0.5.0
    ```
 
 3. The **Release** workflow (`.github/workflows/release.yml`) runs the tests, checks that the tag

@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version 0.4.0" src="https://img.shields.io/badge/version-0.4.0-6D4AFF?style=flat-square">
+  <img alt="Version 0.5.0" src="https://img.shields.io/badge/version-0.5.0-6D4AFF?style=flat-square">
   <img alt="Windows 10 and 11" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0891B2?style=flat-square">
   <img alt="Tauri 2, Rust and React" src="https://img.shields.io/badge/Tauri%202-Rust%20%C2%B7%20React-14151A?style=flat-square">
   <img alt="Interface about 90 MB, watcher 2 MB" src="https://img.shields.io/badge/footprint-UI%20~90%20MB%20%C2%B7%20watcher%202%20MB-16A34A?style=flat-square">
@@ -116,6 +116,7 @@ npx tauri build --no-bundle   # just the release exe (with PresentMon next to it
 npm run dev              # the interface alone in a browser, with sample data
 npm test                 # interface tests and the WCAG contrast check (Vitest)
 npm run e2e              # end-to-end tests against the built app (Playwright)
+powershell -ExecutionPolicy Bypass -File scripts\admin-e2e.ps1   # the same as admin (one UAC prompt)
 cargo test --workspace   # checks, scoring, fixes, frame statistics, profiles and storage
 ```
 
@@ -197,9 +198,13 @@ Each phase of the design document has a gate. All four were run on the developme
 
 **Automated on every push** (`.github/workflows/ci.yml`): the type check, 60 interface tests including a
 WCAG AA contrast check of both themes' colours, 58 Rust tests, end-to-end tests that drive the built app
-with Playwright (first run and scan; a safe fix applied, shown in History and undone; a benchmark of the
-test scene), and the watcher's footprint against its budget. The end-to-end tests use a throwaway data
-folder (`FRAMEWISE_DATA_DIR`, `WEBVIEW2_USER_DATA_FOLDER`), so they never touch your own data.
+with Playwright (first run and scan; a safe fix applied, shown in History and undone), and the
+watcher's footprint against its budget. The end-to-end tests use a throwaway data folder
+(`FRAMEWISE_DATA_DIR`, `WEBVIEW2_USER_DATA_FOLDER`), so they never touch your own data.
+
+Two end-to-end tests need admin rights and a real GPU, which CI runners don't have, so they run on a
+gaming PC through `scripts/admin-e2e.ps1`: clearing the standby list (9.3 GB to 0 MB) and a benchmark
+of the test scene. All four passed on Windows 11 with an RTX 4060 Ti on 2026-11-09.
 
 <details>
 <summary><b>Phase 2: fixes, Cleanup and the helper</b></summary>

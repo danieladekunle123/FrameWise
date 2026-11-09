@@ -26,7 +26,7 @@ Say "Release tests · $(Get-Date -Format s) · $((Get-CimInstance Win32_Operatin
 
 # ---------------- NSIS
 Say ''; Say '== NSIS setup (silent, per machine) =='
-$p = Start-Process 'C:\fwrelease\FrameWise_0.4.0_x64-setup.exe' -ArgumentList '/S' -PassThru -Wait
+$p = Start-Process 'C:\fwrelease\FrameWise_0.5.0_x64-setup.exe' -ArgumentList '/S' -PassThru -Wait
 Say "setup exit code: $($p.ExitCode)"
 Say "installed files: $(Files)"
 $u = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*' -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq 'FrameWise' } | Select-Object -First 1
@@ -47,7 +47,7 @@ Say "after uninstall: exe removed: $gone · files: $(Files) · watchers left: $(
 
 # ---------------- MSI
 Say ''; Say '== MSI (silent) =='
-$p = Start-Process msiexec.exe -ArgumentList '/i', 'C:\fwrelease\FrameWise_0.4.0_x64_en-US.msi', '/qn', '/norestart', '/l*v', 'C:\fwrelease\msi-install.log' -PassThru -Wait
+$p = Start-Process msiexec.exe -ArgumentList '/i', 'C:\fwrelease\FrameWise_0.5.0_x64_en-US.msi', '/qn', '/norestart', '/l*v', 'C:\fwrelease\msi-install.log' -PassThru -Wait
 Say "msiexec install exit code: $($p.ExitCode)"
 Say "installed files: $(Files)"
 Say (AppStart)
@@ -55,7 +55,7 @@ Start-Process "$dir\framewise.exe" -ArgumentList '--watcher'
 Start-Sleep 3
 Set-ItemProperty $run -Name 'FrameWise watcher' -Value "`"$dir\framewise.exe`" --watcher"
 Say "watcher running before uninstall: $(Watchers)"
-$p = Start-Process msiexec.exe -ArgumentList '/x', 'C:\fwrelease\FrameWise_0.4.0_x64_en-US.msi', '/qn', '/norestart', '/l*v', 'C:\fwrelease\msi-uninstall.log' -PassThru -Wait
+$p = Start-Process msiexec.exe -ArgumentList '/x', 'C:\fwrelease\FrameWise_0.5.0_x64_en-US.msi', '/qn', '/norestart', '/l*v', 'C:\fwrelease\msi-uninstall.log' -PassThru -Wait
 Say "msiexec uninstall exit code: $($p.ExitCode) (3010 = finishes after a restart)"
 Say "after uninstall: files: $(Files) · watchers left: $(Watchers) · Run entry left: $([bool](Get-ItemProperty $run -Name 'FrameWise watcher' -ErrorAction SilentlyContinue))"
 Get-CimInstance Win32_Process -Filter "Name='framewise.exe'" | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
@@ -65,7 +65,7 @@ Remove-ItemProperty $run -Name 'FrameWise watcher' -ErrorAction SilentlyContinue
 Say ''; Say '== Portable zip =='
 $pd = 'C:\fwportable'
 if (Test-Path $pd) { Remove-Item $pd -Recurse -Force }
-Expand-Archive 'C:\fwrelease\FrameWise_0.4.0_x64_portable.zip' -DestinationPath $pd
+Expand-Archive 'C:\fwrelease\FrameWise_0.5.0_x64_portable.zip' -DestinationPath $pd
 Say "zip contents: $((Get-ChildItem $pd | ForEach-Object Name) -join ', ')"
 $p = Start-Process "$pd\framewise.exe" -PassThru
 Start-Sleep 8

@@ -469,7 +469,7 @@ export async function handle<T>(cmd: string, args?: Record<string, unknown>): Pr
     case "myths":
       return myths as T;
     case "app_info":
-      return { version: "0.4.0 (browser preview)", data_dir: "%LOCALAPPDATA%\\FrameWise", db_ok: true, portable: false } as T;
+      return { version: "0.5.0 (browser preview)", data_dir: "%LOCALAPPDATA%\\FrameWise", db_ok: true, portable: false } as T;
     case "prepare_update":
       return undefined as T;
     case "crash_reports":
@@ -489,8 +489,8 @@ export async function handle<T>(cmd: string, args?: Record<string, unknown>): Pr
       return { before: 9.2 * 1024 ** 3, after: 0.3 * 1024 ** 3 } as T;
     case "crash_issue":
     case "watcher_budget_issue": {
-      const title = cmd === "crash_issue" ? "Crash: watcher stopped unexpectedly (0.4.0)" : "Watcher over budget (0.4.0)";
-      const body = "**FrameWise 0.4.0** · Windows 11 (build 26300) · watcher\n\n(preview text)";
+      const title = cmd === "crash_issue" ? "Crash: watcher stopped unexpectedly (0.5.0)" : "Watcher over budget (0.5.0)";
+      const body = "**FrameWise 0.5.0** · Windows 11 (build 26300) · watcher\n\n(preview text)";
       return { title, body, url: "https://github.com/danieladekunle123/FrameWise/issues/new" } as T;
     }
     case "system_accent":

@@ -62,12 +62,13 @@ test.beforeAll(async () => {
       }
     };
     const files = ps(`Get-ChildItem -Recurse -Depth 3 '${dataDir}' | Select-Object -First 40 -ExpandProperty FullName`);
-    const webviews = ps(`Get-CimInstance Win32_Process -Filter "Name='msedgewebview2.exe'" | Where-Object { $_.CommandLine -notmatch '--type=' } | ForEach-Object { $_.ProcessId.ToString() + ' ' + $_.CommandLine }`);
+    const webviews = ps(`Get-CimInstance Win32_Process -Filter "Name='msedgewebview2.exe'" | Where-Object { $_.CommandLine -match 'webview-exe-name=framewise' -and $_.CommandLine -notmatch '--type=' } | ForEach-Object { $_.ProcessId.ToString() + ' ' + $_.CommandLine }`);
     const windows = ps(`Get-Process framewise -ErrorAction SilentlyContinue | ForEach-Object { $_.Id.ToString() + ' session ' + $_.SessionId + ' window [' + $_.MainWindowTitle + ']' }`);
     const ports = ps(`Get-NetTCPConnection -State Listen -OwningProcess (Get-Process msedgewebview2 -ErrorAction SilentlyContinue).Id -ErrorAction SilentlyContinue | ForEach-Object { $_.LocalAddress + ':' + $_.LocalPort }`);
     throw new Error(
       `FrameWise's window didn't open its debug port within 60 s. App ${app.exitCode === null ? "still running" : `exited with code ${app.exitCode}`}.` +
         (reports.length ? ` Crash reports: ${reports.join(" | ")}` : " No crash report.") +
+        " (Running as admin? WebView2 ignores WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS then: use scripts/admin-e2e.ps1.)" +
         `\nApp: ${windows || "(none)"}\nWebView2 browser processes:\n${webviews || "(none)"}\nWebView2 listening on: ${ports || "(nothing)"}\nData folder:\n${files || "(empty)"}`,
     );
   }
@@ -123,6 +124,22 @@ test("a safe fix applies, shows in History, and Undo puts it back", async () => 
   await expect(row).toBeVisible();
   await page.getByRole("button", { name: /^Undo$/ }).first().click();
   await expect(page.getByText("1 change undone")).toBeVisible({ timeout: 60_000 });
+});
+
+test("the standby list clears when asked", async () => {
+  // Clearing goes through the helper, which needs a UAC prompt unless the tests already run as admin.
+  let admin = true;
+  try {
+    execFileSync("net", ["session"], { stdio: "ignore" });
+  } catch {
+    admin = false;
+  }
+  test.skip(!admin, "Clearing the standby list needs admin rights (run the tests from an admin terminal).");
+  const r = await invoke<{ before: number | null; after: number | null }>("standby_purge");
+  expect(r.before, "standby size before").not.toBeNull();
+  expect(r.after, "standby size after").not.toBeNull();
+  expect(r.after!).toBeLessThan(r.before!);
+  console.log(`Standby list: ${(r.before! / 2 ** 20).toFixed(0)} MB before, ${(r.after! / 2 ** 20).toFixed(0)} MB after.`);
 });
 
 test("a benchmark records the test scene", async () => {
