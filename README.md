@@ -97,8 +97,29 @@ in Settings), verifies each update's signature, and only installs when you click
 restart**. Uninstalling stops the game-profile watcher and removes its startup entry.
 
 > [!IMPORTANT]
-> Releases aren't code-signed yet, so Windows SmartScreen warns about the installer, and the
-> permission prompt for machine-wide fixes shows "Publisher: Unknown". See [RELEASING.md](RELEASING.md).
+> Releases aren't code-signed yet, so Windows SmartScreen warns about the installer (click **More
+> info > Run anyway**), and the permission prompt for machine-wide fixes shows "Publisher: Unknown".
+> FrameWise has applied for free code signing; see the [code signing policy](#code-signing-policy).
+
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by
+[SignPath Foundation](https://signpath.org).
+
+> [!NOTE]
+> FrameWise applied to SignPath Foundation in November 2026. Releases are unsigned until the
+> application is approved; the first signed release will say so in its notes.
+
+- **Committers and reviewers:** [Daniel Adekunle](https://github.com/danieladekunle123), the only
+  maintainer. Changes from anyone else arrive as pull requests, and he reviews each one, including any
+  change to the build scripts and workflows.
+- **Approvers:** [Daniel Adekunle](https://github.com/danieladekunle123). Every signing request is
+  approved by hand.
+- **What's signed:** only FrameWise's own files (ramewise.exe and its installers), built by GitHub
+  Actions from this repository's tagged source (.github/workflows/release.yml). Intel's PresentMon is
+  included as Intel signed it.
+- **Privacy:** see the [privacy policy](PRIVACY.md). FrameWise has no telemetry; it only goes online to
+  check for updates (which you can turn off), to time a ping, and to open reports you choose to send.
 
 ## Getting started (building from source)
 
@@ -277,7 +298,7 @@ Tests used copies of the test scene as a "game" (`game_sim.exe`) and two backgro
 
 ## Data and privacy
 
-Everything stays on the PC, in `%LOCALAPPDATA%\FrameWise\framewise.db` (SQLite) plus benchmark
+Full details: [PRIVACY.md](PRIVACY.md). In short: everything stays on the PC, in `%LOCALAPPDATA%\FrameWise\framewise.db` (SQLite) plus benchmark
 frame-time files next to it. There's no account and no telemetry. The network is used for two
 things: the ping check, which times a TCP handshake to 1.1.1.1 (or 8.8.8.8) and sends no data, and the
 update check, which downloads `latest.json` from this repository's releases when FrameWise starts (it

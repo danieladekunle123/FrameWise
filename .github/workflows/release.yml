@@ -53,7 +53,7 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: FrameWise ${{ github.ref_name }}
-          releaseBody: See the README for what's new. Download the -setup.exe (recommended), the .msi, or the portable zip.
+          releaseBody: See the README for what's new. Download the -setup.exe (recommended), the .msi, or the portable zip. Code signing policy and privacy policy: https://github.com/danieladekunle123/FrameWise#code-signing-policy
           releaseDraft: true
           prerelease: false
           includeUpdaterJson: true

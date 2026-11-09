@@ -69,7 +69,39 @@ powershell -File scripts/make-portable.ps1
 `scripts/release-tests.ps1` checks the installers inside a disposable Windows VM: silent install
 and uninstall of both, the watcher stopping, the startup entry being removed, and the portable zip.
 
-## Code signing (not set up yet)
+## Code signing (applied to SignPath Foundation, November 2026)
+
+The README's [code signing policy](README.md#code-signing-policy) and [PRIVACY.md](PRIVACY.md) are
+what SignPath asks every project to publish. Keep them accurate: they are part of the agreement.
+
+### When SignPath approves
+
+SignPath sets up an organisation for FrameWise and sends its ID. Then:
+
+1. In SignPath, create the project `framewise` linked to this GitHub repository, with two artifact
+   configurations:
+   - **exe:** a zip containing `framewise.exe`. Restrict the file metadata: product name `FrameWise`
+     and product version equal to the release version.
+   - **installers:** a zip containing `FrameWise_*_x64-setup.exe` and `FrameWise_*_x64_en-US.msi`,
+     with the same restrictions.
+
+   Use the `release-signing` signing policy (manual approval, the only kind SignPath Foundation allows).
+   Never sign `PresentMon-*.exe`: it's Intel's, and Intel already signs it.
+2. Add two repository secrets: `SIGNPATH_API_TOKEN` (a CI user's token) and `SIGNPATH_ORGANIZATION_ID`.
+3. Change `release.yml` to sign in two rounds, since the installers contain the exe:
+   1. `npx tauri build --no-bundle`, upload `framewise.exe` as a workflow artifact, submit it with
+      `signpath/github-action-submit-signing-request` (exe configuration, `wait-for-completion: true`),
+      and put the signed exe back in `target\release`.
+   2. `npx tauri bundle` to build the installers around the signed exe, then submit both installers
+      (installers configuration) and replace them with the signed copies.
+   3. The updater signatures must cover the final, signed installers, so re-create them afterwards
+      with `npx tauri signer sign` and rebuild `latest.json` from the new `.sig` files. Build the
+      portable zip from the signed exe.
+4. Approve both signing requests in SignPath during each release (two clicks, about 10 minutes apart).
+5. Update the note under "Code signing policy" in the README to say releases are signed, and check a
+   downloaded installer with `Get-AuthenticodeSignature`: the signer should be SignPath Foundation.
+
+### Why it matters
 
 Without a code-signing certificate, Windows treats FrameWise as from an unknown publisher:
 
@@ -82,7 +114,7 @@ The options, roughly from cheapest to most expensive (check current prices and e
 
 | Option | Notes |
 | --- | --- |
-| **SignPath Foundation** | Free signing for open-source projects. Requires a public repository with an OSI licence (MIT qualifies) and their review. |
+| **SignPath Foundation** (applied) | Free signing for open-source projects. Requires a public repository with an OSI licence (MIT qualifies), their review, and some verifiable reputation for executables. The certificate is in SignPath Foundation's name, not yours. |
 | **Certum Open Source Code Signing** | A low-cost certificate for individual open-source developers, issued in your own name. Uses a smart card or their cloud signing. |
 | **Microsoft Artifact Signing** (formerly Trusted Signing) | A monthly subscription with signing from GitHub Actions. Identity validation and eligibility depend on where you live and whether you sign as an individual or a business. |
 | **A standard OV certificate** | Yearly, from a certificate authority. Since 2023 these come on a hardware token or cloud HSM. |
