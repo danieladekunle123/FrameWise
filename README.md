@@ -198,13 +198,13 @@ Each phase of the design document has a gate. All four were run on the developme
 
 **Automated on every push** (`.github/workflows/ci.yml`): the type check, 60 interface tests including a
 WCAG AA contrast check of both themes' colours, 58 Rust tests, end-to-end tests that drive the built app
-with Playwright (first run and scan; a safe fix applied, shown in History and undone), and the
-watcher's footprint against its budget. The end-to-end tests use a throwaway data folder
+with Playwright (first run and scan; a safe fix applied, shown in History and undone; the standby list
+cleared), and the watcher's footprint against its budget. The end-to-end tests use a throwaway data folder
 (`FRAMEWISE_DATA_DIR`, `WEBVIEW2_USER_DATA_FOLDER`), so they never touch your own data.
 
-Two end-to-end tests need admin rights and a real GPU, which CI runners don't have, so they run on a
-gaming PC through `scripts/admin-e2e.ps1`: clearing the standby list (9.3 GB to 0 MB) and a benchmark
-of the test scene. All four passed on Windows 11 with an RTX 4060 Ti on 2026-11-09.
+The benchmark end-to-end test needs frame capture, so it needs admin rights and a real GPU. CI runners
+have no GPU, so it runs on a gaming PC through `scripts/admin-e2e.ps1`. All four end-to-end tests
+passed that way on Windows 11 with an RTX 4060 Ti on 2026-11-09 (the standby list went from 9.3 GB to 0 MB).
 
 <details>
 <summary><b>Phase 2: fixes, Cleanup and the helper</b></summary>
